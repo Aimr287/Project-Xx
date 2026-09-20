@@ -5,17 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Project X</title>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
     }
 
     body {
       background: #050505;
-      color: #fff;
+      color: white;
       font-family: Arial, sans-serif;
+      min-height: 100vh;
     }
 
     .navbar {
@@ -25,9 +28,9 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 30px;
+      background: #050505;
       position: sticky;
       top: 0;
-      background: rgba(5, 5, 5, 0.95);
       z-index: 10;
     }
 
@@ -37,56 +40,62 @@
       letter-spacing: 3px;
     }
 
-    .search {
-      width: 280px;
-      background: #111;
-      border: 1px solid #222;
-      padding: 12px 16px;
-      border-radius: 12px;
-      color: white;
-      outline: none;
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-email {
+      color: #888;
+      font-size: 13px;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .login-btn,
+    .logout-btn,
+    .post-btn {
+      border: none;
+      background: white;
+      color: black;
+      font-weight: bold;
+      border-radius: 9px;
+      padding: 10px 15px;
     }
 
     .layout {
-      display: grid;
-      grid-template-columns: 220px 1fr 260px;
       max-width: 1400px;
       margin: auto;
-      gap: 25px;
       padding: 25px;
-    }
-
-    .sidebar,
-    .rightbar {
-      position: sticky;
-      top: 95px;
-      height: fit-content;
+      display: grid;
+      grid-template-columns: 220px 1fr 260px;
+      gap: 25px;
     }
 
     .menu {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 8px;
+      position: sticky;
+      top: 95px;
     }
 
     .menu button {
       background: transparent;
       color: #aaa;
       border: none;
-      padding: 12px;
+      padding: 13px;
       text-align: left;
       border-radius: 10px;
       font-size: 15px;
-      cursor: pointer;
     }
 
     .menu button:hover {
       background: #111;
       color: white;
-    }
-
-    .feed {
-      min-width: 0;
     }
 
     .composer,
@@ -102,15 +111,15 @@
       margin-bottom: 20px;
     }
 
-    .composer textarea {
+    textarea {
       width: 100%;
-      min-height: 90px;
+      height: 100px;
+      resize: none;
       background: #111;
+      color: white;
       border: 1px solid #222;
       border-radius: 12px;
       padding: 14px;
-      color: white;
-      resize: none;
       outline: none;
       font-size: 15px;
     }
@@ -119,16 +128,6 @@
       display: flex;
       justify-content: flex-end;
       margin-top: 12px;
-    }
-
-    .post-btn {
-      background: white;
-      color: black;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
     }
 
     .post {
@@ -171,7 +170,7 @@
       margin-bottom: 16px;
     }
 
-    .post-actions {
+    .actions {
       display: flex;
       gap: 20px;
       border-top: 1px solid #1d1d1d;
@@ -182,7 +181,6 @@
       background: none;
       border: none;
       color: #888;
-      cursor: pointer;
     }
 
     .action:hover {
@@ -196,47 +194,109 @@
 
     .card h3 {
       margin-bottom: 15px;
-      font-size: 16px;
     }
 
     .person {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 14px;
-    }
-
-    .person-info {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .small-avatar {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: #222;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
+      margin-bottom: 15px;
     }
 
     .follow {
+      border: none;
       background: white;
       color: black;
-      border: none;
       border-radius: 8px;
       padding: 7px 10px;
-      cursor: pointer;
+      font-weight: bold;
       font-size: 12px;
+    }
+
+    .auth-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.88);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 100;
+    }
+
+    .auth-box {
+      width: 100%;
+      max-width: 400px;
+      background: #0b0b0b;
+      border: 1px solid #222;
+      border-radius: 18px;
+      padding: 28px;
+    }
+
+    .close-btn {
+      float: right;
+      border: none;
+      background: none;
+      color: #777;
+      font-size: 24px;
+    }
+
+    .auth-box h2 {
+      margin-bottom: 8px;
+    }
+
+    .auth-subtitle {
+      color: #777;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .tab {
+      flex: 1;
+      border: 1px solid #222;
+      background: #111;
+      color: #aaa;
+      padding: 10px;
+      border-radius: 9px;
+    }
+
+    .tab.active {
+      background: white;
+      color: black;
+    }
+
+    .auth-box input {
+      width: 100%;
+      padding: 13px;
+      margin-bottom: 12px;
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 10px;
+      color: white;
+      outline: none;
+    }
+
+    .auth-submit {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: white;
+      color: black;
       font-weight: bold;
     }
 
-    .empty {
-      color: #666;
-      font-size: 14px;
+    .message {
+      color: #aaa;
+      font-size: 13px;
+      margin-top: 14px;
+      line-height: 1.5;
     }
 
     @media (max-width: 950px) {
@@ -247,32 +307,20 @@
       .rightbar {
         display: none;
       }
-
-      .search {
-        width: 200px;
-      }
     }
 
     @media (max-width: 650px) {
-      .navbar {
-        padding: 0 15px;
-      }
-
-      .search {
-        display: none;
-      }
-
       .layout {
         display: block;
         padding: 15px;
       }
 
       .sidebar {
-        position: static;
         margin-bottom: 20px;
       }
 
       .menu {
+        position: static;
         flex-direction: row;
         overflow-x: auto;
       }
@@ -280,164 +328,341 @@
       .menu button {
         white-space: nowrap;
       }
+
+      .nav-email {
+        display: none;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <header class="navbar">
-    <div class="logo">PROJECT X</div>
-    <input class="search" type="text" placeholder="Search Project X">
-  </header>
+<header class="navbar">
+  <div class="logo">PROJECT X</div>
 
-  <main class="layout">
+  <div class="nav-right" id="navRight">
+    <button class="login-btn" onclick="openAuth()">Sign in</button>
+  </div>
+</header>
 
-    <aside class="sidebar">
-      <nav class="menu">
-        <button>🏠 Home</button>
-        <button>🔎 Explore</button>
-        <button>👤 Profile</button>
-        <button>💬 Messages</button>
-        <button>🔔 Notifications</button>
-      </nav>
-    </aside>
+<main class="layout">
 
-    <section class="feed">
+  <aside class="sidebar">
+    <nav class="menu">
+      <button>🏠 Home</button>
+      <button>🔎 Explore</button>
+      <button>👤 Profile</button>
+      <button>💬 Messages</button>
+      <button>🔔 Notifications</button>
+    </nav>
+  </aside>
 
-      <div class="composer">
-        <textarea id="postInput" placeholder="What's happening?"></textarea>
+  <section>
 
-        <div class="composer-bottom">
-          <button class="post-btn" onclick="createPost()">Post</button>
-        </div>
+    <div class="composer">
+      <textarea id="postInput" placeholder="What's happening?"></textarea>
+
+      <div class="composer-bottom">
+        <button class="post-btn" onclick="createPost()">Post</button>
       </div>
+    </div>
 
-      <div id="posts">
+    <div id="posts">
 
-        <article class="post">
-          <div class="post-header">
-            <div class="avatar">X</div>
-            <div>
-              <div class="username">Project X</div>
-              <div class="time">Just now</div>
-            </div>
-          </div>
-
-          <div class="post-text">
-            Welcome to Project X — a new social platform built from the ground up.
-          </div>
-
-          <div class="post-actions">
-            <button class="action" onclick="likePost(this)">♡ Like</button>
-            <button class="action">💬 Comment</button>
-            <button class="action">↗ Share</button>
-          </div>
-        </article>
-
-        <article class="post">
-          <div class="post-header">
-            <div class="avatar">A</div>
-            <div>
-              <div class="username">Alex</div>
-              <div class="time">2h ago</div>
-            </div>
-          </div>
-
-          <div class="post-text">
-            Building something from zero is difficult — but that's the point.
-          </div>
-
-          <div class="post-actions">
-            <button class="action" onclick="likePost(this)">♡ Like</button>
-            <button class="action">💬 Comment</button>
-            <button class="action">↗ Share</button>
-          </div>
-        </article>
-
-      </div>
-
-    </section>
-
-    <aside class="rightbar">
-
-      <div class="card">
-        <h3>Who to follow</h3>
-
-        <div class="person">
-          <div class="person-info">
-            <div class="small-avatar">J</div>
-            <span>John</span>
-          </div>
-          <button class="follow">Follow</button>
-        </div>
-
-        <div class="person">
-          <div class="person-info">
-            <div class="small-avatar">S</div>
-            <span>Sarah</span>
-          </div>
-          <button class="follow">Follow</button>
-        </div>
-
-      </div>
-
-      <div class="card">
-        <h3>Trending</h3>
-        <p class="empty">#ProjectX</p>
-        <br>
-        <p class="empty">#Technology</p>
-        <br>
-        <p class="empty">#Community</p>
-      </div>
-
-    </aside>
-
-  </main>
-
-  <script>
-    function createPost() {
-      const input = document.getElementById("postInput");
-      const posts = document.getElementById("posts");
-
-      const text = input.value.trim();
-
-      if (!text) return;
-
-      const post = document.createElement("article");
-
-      post.className = "post";
-
-      post.innerHTML = `
+      <article class="post">
         <div class="post-header">
-          <div class="avatar">Y</div>
+          <div class="avatar">X</div>
+
           <div>
-            <div class="username">You</div>
+            <div class="username">Project X</div>
             <div class="time">Just now</div>
           </div>
         </div>
 
-        <div class="post-text">${text}</div>
+        <div class="post-text">
+          Welcome to Project X — a new social platform built from the ground up.
+        </div>
 
-        <div class="post-actions">
+        <div class="actions">
           <button class="action" onclick="likePost(this)">♡ Like</button>
           <button class="action">💬 Comment</button>
           <button class="action">↗ Share</button>
         </div>
+      </article>
+
+    </div>
+
+  </section>
+
+  <aside class="rightbar">
+
+    <div class="card">
+      <h3>Who to follow</h3>
+
+      <div class="person">
+        <span>John</span>
+        <button class="follow">Follow</button>
+      </div>
+
+      <div class="person">
+        <span>Sarah</span>
+        <button class="follow">Follow</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Trending</h3>
+      <p style="color:#777">#ProjectX</p>
+      <br>
+      <p style="color:#777">#Technology</p>
+      <br>
+      <p style="color:#777">#Community</p>
+    </div>
+
+  </aside>
+
+</main>
+
+<div class="auth-overlay" id="authOverlay">
+
+  <div class="auth-box">
+
+    <button class="close-btn" onclick="closeAuth()">×</button>
+
+    <h2>Welcome to Project X</h2>
+
+    <div class="auth-subtitle">
+      Create your account and join the community.
+    </div>
+
+    <div class="tabs">
+      <button id="loginTab" class="tab active" onclick="setMode('login')">
+        Login
+      </button>
+
+      <button id="signupTab" class="tab" onclick="setMode('signup')">
+        Sign Up
+      </button>
+    </div>
+
+    <form onsubmit="handleAuth(event)">
+
+      <input id="email" type="email" placeholder="Email" required>
+
+      <input
+        id="password"
+        type="password"
+        placeholder="Password"
+        minlength="6"
+        required
+      >
+
+      <button class="auth-submit" id="authSubmit">
+        Login
+      </button>
+
+    </form>
+
+    <div class="message" id="authMessage"></div>
+
+  </div>
+
+</div>
+
+<script>
+
+  const SUPABASE_URL = "https://mgpkftmgjmgmnwgbfwer.supabase.co";
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_UD2sp-ggkI_A9oA-TZM8Tg_g9cpm60J";
+
+  const { createClient } = window.supabase;
+
+  const supabaseClient = createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+  let mode = "login";
+
+  function openAuth() {
+    document.getElementById("authOverlay").style.display = "flex";
+  }
+
+  function closeAuth() {
+    document.getElementById("authOverlay").style.display = "none";
+  }
+
+  function setMode(newMode) {
+
+    mode = newMode;
+
+    const loginTab = document.getElementById("loginTab");
+    const signupTab = document.getElementById("signupTab");
+    const submit = document.getElementById("authSubmit");
+
+    if (mode === "login") {
+      loginTab.classList.add("active");
+      signupTab.classList.remove("active");
+      submit.textContent = "Login";
+    } else {
+      signupTab.classList.add("active");
+      loginTab.classList.remove("active");
+      submit.textContent = "Create account";
+    }
+
+    document.getElementById("authMessage").textContent = "";
+  }
+
+  async function handleAuth(event) {
+
+    event.preventDefault();
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    const message = document.getElementById("authMessage");
+
+    message.textContent = "Please wait...";
+
+    if (mode === "signup") {
+
+      const { data, error } =
+        await supabaseClient.auth.signUp({
+          email,
+          password
+        });
+
+      if (error) {
+        message.textContent = error.message;
+        return;
+      }
+
+      if (data.session) {
+        message.textContent = "Account created successfully.";
+        closeAuth();
+      } else {
+        message.textContent =
+          "Account created. Check your email to confirm it.";
+      }
+
+    } else {
+
+      const { error } =
+        await supabaseClient.auth.signInWithPassword({
+          email,
+          password
+        });
+
+      if (error) {
+        message.textContent = error.message;
+        return;
+      }
+
+      closeAuth();
+    }
+  }
+
+  async function updateUserUI() {
+
+    const {
+      data: { user }
+    } = await supabaseClient.auth.getUser();
+
+    const navRight = document.getElementById("navRight");
+
+    if (user) {
+
+      navRight.innerHTML = `
+        <span class="nav-email">${user.email}</span>
+        <button class="logout-btn" onclick="logout()">Logout</button>
       `;
 
-      posts.prepend(post);
-      input.value = "";
-    }
+    } else {
 
-    function likePost(button) {
-      if (button.textContent.includes("♡")) {
-        button.textContent = "♥ Liked";
-      } else {
-        button.textContent = "♡ Like";
-      }
+      navRight.innerHTML = `
+        <button class="login-btn" onclick="openAuth()">Sign in</button>
+      `;
     }
-  </script>
+  }
+
+  async function logout() {
+
+    await supabaseClient.auth.signOut();
+
+    updateUserUI();
+  }
+
+  supabaseClient.auth.onAuthStateChange(() => {
+    updateUserUI();
+  });
+
+  updateUserUI();
+
+  function createPost() {
+
+    const input = document.getElementById("postInput");
+    const posts = document.getElementById("posts");
+
+    const text = input.value.trim();
+
+    if (!text) return;
+
+    const post = document.createElement("article");
+
+    post.className = "post";
+
+    post.innerHTML = `
+      <div class="post-header">
+        <div class="avatar">Y</div>
+
+        <div>
+          <div class="username">You</div>
+          <div class="time">Just now</div>
+        </div>
+      </div>
+
+      <div class="post-text">${escapeHtml(text)}</div>
+
+      <div class="actions">
+        <button class="action" onclick="likePost(this)">
+          ♡ Like
+        </button>
+
+        <button class="action">
+          💬 Comment
+        </button>
+
+        <button class="action">
+          ↗ Share
+        </button>
+      </div>
+    `;
+
+    posts.prepend(post);
+
+    input.value = "";
+  }
+
+  function likePost(button) {
+
+    if (button.textContent.includes("♡")) {
+      button.textContent = "♥ Liked";
+    } else {
+      button.textContent = "♡ Like";
+    }
+  }
+
+  function escapeHtml(value) {
+
+    return value
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+</script>
 
 </body>
 </html>
