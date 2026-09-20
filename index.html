@@ -13,48 +13,431 @@
     }
 
     body {
-      min-height: 100vh;
+      background: #050505;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+      height: 70px;
+      border-bottom: 1px solid #222;
       display: flex;
       align-items: center;
-      justify-content: center;
-      background: #050505;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
+      justify-content: space-between;
+      padding: 0 30px;
+      position: sticky;
+      top: 0;
+      background: rgba(5, 5, 5, 0.95);
+      z-index: 10;
     }
 
-    .container {
-      padding: 40px;
-    }
-
-    h1 {
-      font-size: 64px;
-      letter-spacing: 8px;
-      margin-bottom: 15px;
-    }
-
-    p {
-      font-size: 18px;
-      color: #999;
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
       letter-spacing: 3px;
     }
 
-    .line {
-      width: 80px;
-      height: 3px;
+    .search {
+      width: 280px;
+      background: #111;
+      border: 1px solid #222;
+      padding: 12px 16px;
+      border-radius: 12px;
+      color: white;
+      outline: none;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 220px 1fr 260px;
+      max-width: 1400px;
+      margin: auto;
+      gap: 25px;
+      padding: 25px;
+    }
+
+    .sidebar,
+    .rightbar {
+      position: sticky;
+      top: 95px;
+      height: fit-content;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .menu button {
+      background: transparent;
+      color: #aaa;
+      border: none;
+      padding: 12px;
+      text-align: left;
+      border-radius: 10px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .menu button:hover {
+      background: #111;
+      color: white;
+    }
+
+    .feed {
+      min-width: 0;
+    }
+
+    .composer,
+    .post,
+    .card {
+      background: #0b0b0b;
+      border: 1px solid #222;
+      border-radius: 16px;
+    }
+
+    .composer {
+      padding: 18px;
+      margin-bottom: 20px;
+    }
+
+    .composer textarea {
+      width: 100%;
+      min-height: 90px;
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 14px;
+      color: white;
+      resize: none;
+      outline: none;
+      font-size: 15px;
+    }
+
+    .composer-bottom {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 12px;
+    }
+
+    .post-btn {
       background: white;
-      margin: 25px auto;
+      color: black;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .post {
+      padding: 18px;
+      margin-bottom: 20px;
+    }
+
+    .post-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: white;
+      color: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .username {
+      font-weight: bold;
+    }
+
+    .time {
+      color: #666;
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
+    .post-text {
+      color: #ddd;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .post-actions {
+      display: flex;
+      gap: 20px;
+      border-top: 1px solid #1d1d1d;
+      padding-top: 14px;
+    }
+
+    .action {
+      background: none;
+      border: none;
+      color: #888;
+      cursor: pointer;
+    }
+
+    .action:hover {
+      color: white;
+    }
+
+    .card {
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .card h3 {
+      margin-bottom: 15px;
+      font-size: 16px;
+    }
+
+    .person {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .person-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .small-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #222;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+
+    .follow {
+      background: white;
+      color: black;
+      border: none;
+      border-radius: 8px;
+      padding: 7px 10px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .empty {
+      color: #666;
+      font-size: 14px;
+    }
+
+    @media (max-width: 950px) {
+      .layout {
+        grid-template-columns: 180px 1fr;
+      }
+
+      .rightbar {
+        display: none;
+      }
+
+      .search {
+        width: 200px;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .navbar {
+        padding: 0 15px;
+      }
+
+      .search {
+        display: none;
+      }
+
+      .layout {
+        display: block;
+        padding: 15px;
+      }
+
+      .sidebar {
+        position: static;
+        margin-bottom: 20px;
+      }
+
+      .menu {
+        flex-direction: row;
+        overflow-x: auto;
+      }
+
+      .menu button {
+        white-space: nowrap;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container">
-    <h1>PROJECT X</h1>
-    <div class="line"></div>
-    <p>DISCIPLINE • DETERMINATION • FOCUS</p>
-  </div>
+  <header class="navbar">
+    <div class="logo">PROJECT X</div>
+    <input class="search" type="text" placeholder="Search Project X">
+  </header>
+
+  <main class="layout">
+
+    <aside class="sidebar">
+      <nav class="menu">
+        <button>🏠 Home</button>
+        <button>🔎 Explore</button>
+        <button>👤 Profile</button>
+        <button>💬 Messages</button>
+        <button>🔔 Notifications</button>
+      </nav>
+    </aside>
+
+    <section class="feed">
+
+      <div class="composer">
+        <textarea id="postInput" placeholder="What's happening?"></textarea>
+
+        <div class="composer-bottom">
+          <button class="post-btn" onclick="createPost()">Post</button>
+        </div>
+      </div>
+
+      <div id="posts">
+
+        <article class="post">
+          <div class="post-header">
+            <div class="avatar">X</div>
+            <div>
+              <div class="username">Project X</div>
+              <div class="time">Just now</div>
+            </div>
+          </div>
+
+          <div class="post-text">
+            Welcome to Project X — a new social platform built from the ground up.
+          </div>
+
+          <div class="post-actions">
+            <button class="action" onclick="likePost(this)">♡ Like</button>
+            <button class="action">💬 Comment</button>
+            <button class="action">↗ Share</button>
+          </div>
+        </article>
+
+        <article class="post">
+          <div class="post-header">
+            <div class="avatar">A</div>
+            <div>
+              <div class="username">Alex</div>
+              <div class="time">2h ago</div>
+            </div>
+          </div>
+
+          <div class="post-text">
+            Building something from zero is difficult — but that's the point.
+          </div>
+
+          <div class="post-actions">
+            <button class="action" onclick="likePost(this)">♡ Like</button>
+            <button class="action">💬 Comment</button>
+            <button class="action">↗ Share</button>
+          </div>
+        </article>
+
+      </div>
+
+    </section>
+
+    <aside class="rightbar">
+
+      <div class="card">
+        <h3>Who to follow</h3>
+
+        <div class="person">
+          <div class="person-info">
+            <div class="small-avatar">J</div>
+            <span>John</span>
+          </div>
+          <button class="follow">Follow</button>
+        </div>
+
+        <div class="person">
+          <div class="person-info">
+            <div class="small-avatar">S</div>
+            <span>Sarah</span>
+          </div>
+          <button class="follow">Follow</button>
+        </div>
+
+      </div>
+
+      <div class="card">
+        <h3>Trending</h3>
+        <p class="empty">#ProjectX</p>
+        <br>
+        <p class="empty">#Technology</p>
+        <br>
+        <p class="empty">#Community</p>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <script>
+    function createPost() {
+      const input = document.getElementById("postInput");
+      const posts = document.getElementById("posts");
+
+      const text = input.value.trim();
+
+      if (!text) return;
+
+      const post = document.createElement("article");
+
+      post.className = "post";
+
+      post.innerHTML = `
+        <div class="post-header">
+          <div class="avatar">Y</div>
+          <div>
+            <div class="username">You</div>
+            <div class="time">Just now</div>
+          </div>
+        </div>
+
+        <div class="post-text">${text}</div>
+
+        <div class="post-actions">
+          <button class="action" onclick="likePost(this)">♡ Like</button>
+          <button class="action">💬 Comment</button>
+          <button class="action">↗ Share</button>
+        </div>
+      `;
+
+      posts.prepend(post);
+      input.value = "";
+    }
+
+    function likePost(button) {
+      if (button.textContent.includes("♡")) {
+        button.textContent = "♥ Liked";
+      } else {
+        button.textContent = "♡ Like";
+      }
+    }
+  </script>
 
 </body>
 </html>
