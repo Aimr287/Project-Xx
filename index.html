@@ -592,9 +592,32 @@
     updateUserUI();
   }
 
-  supabaseClient.auth.onAuthStateChange(() => {
-    updateUserUI();
-  });
+  supabaseClient.auth.onAuthStateChange((event) => {
+  updateUserUI();
+
+  if (event === "PASSWORD_RECOVERY") {
+    setTimeout(async () => {
+      const newPassword = prompt("Enter your new password:");
+
+      if (!newPassword) return;
+
+      if (newPassword.length < 6) {
+        alert("Password must be at least 6 characters.");
+        return;
+      }
+
+      const { error } = await supabaseClient.auth.updateUser({
+        password: newPassword
+      });
+
+      if (error) {
+        alert(error.message);
+      } else {
+        alert("Password changed successfully!");
+      }
+    }, 0);
+  }
+});
 
   updateUserUI();
 
