@@ -3710,151 +3710,186 @@
        POSTS
     ===================================================== */
 
-    async function loadPosts(
-      reset = true
+    let postsLoadRequest = 0;
+
+async function loadPosts(
+  reset = true
+) {
+
+  const requestId =
+    ++postsLoadRequest;
+
+
+  const container =
+    document.getElementById(
+      "postsContainer"
+    );
+
+
+  if (reset) {
+
+    postsOffset = 0;
+
+    morePostsAvailable = true;
+
+    container.innerHTML = `
+      <div class="empty-state">
+        Loading posts...
+      </div>
+    `;
+
+  }
+
+
+  const from =
+    postsOffset;
+
+
+  const to =
+    postsOffset +
+    POST_PAGE_SIZE -
+    1;
+
+
+  const {
+    data: posts,
+    error
+  } =
+    await supabaseClient
+      .from("posts")
+      .select(
+        "id,user_id,content,created_at,updated_at"
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      )
+      .range(
+        from,
+        to
+      );
+
+
+  /*
+    اگر هم‌زمان درخواست جدیدتری اجرا شده،
+    نتیجه این درخواست قدیمی را نادیده می‌گیریم.
+  */
+
+  if (
+    requestId !==
+    postsLoadRequest
+  ) {
+
+    return;
+
+  }
+
+
+  if (error) {
+
+    container.innerHTML = `
+      <div class="empty-state">
+        Could not load posts.
+      </div>
+    `;
+
+    console.error(error);
+
+    return;
+
+  }
+
+
+  if (
+    posts.length <
+    POST_PAGE_SIZE
+  ) {
+
+    morePostsAvailable =
+      false;
+
+  }
+
+
+  if (reset) {
+
+    container.innerHTML = "";
+
+  }
+
+
+  if (
+    posts.length === 0 &&
+    reset
+  ) {
+
+    container.innerHTML = `
+      <div class="empty-state">
+        No posts yet. Be the first to post.
+      </div>
+    `;
+
+  } else {
+
+    const html =
+      await buildPostsHTML(
+        posts
+      );
+
+
+    /*
+      دوباره بررسی می‌کنیم که درخواست
+      هنوز آخرین درخواست باشد.
+    */
+
+    if (
+      requestId !==
+      postsLoadRequest
     ) {
 
-      if (reset) {
-
-        postsOffset = 0;
-
-        morePostsAvailable = true;
-
-        document
-          .getElementById(
-            "postsContainer"
-          )
-          .innerHTML = `
-            <div class="empty-state">
-              Loading posts...
-            </div>
-          `;
-
-      }
-
-
-      const from =
-        postsOffset;
-
-
-      const to =
-        postsOffset +
-        POST_PAGE_SIZE -
-        1;
-
-
-      const {
-        data: posts,
-        error
-      } =
-        await supabaseClient
-          .from("posts")
-          .select(
-            "id,user_id,content,created_at,updated_at"
-          )
-          .order(
-            "created_at",
-            {
-              ascending: false
-            }
-          )
-          .range(
-            from,
-            to
-          );
-
-
-      if (error) {
-
-        document
-          .getElementById(
-            "postsContainer"
-          )
-          .innerHTML = `
-            <div class="empty-state">
-              Could not load posts.
-            </div>
-          `;
-
-        console.error(error);
-
-        return;
-
-      }
-
-
-      if (
-        posts.length <
-        POST_PAGE_SIZE
-      ) {
-
-        morePostsAvailable =
-          false;
-
-      }
-
-
-      if (reset) {
-
-        document
-          .getElementById(
-            "postsContainer"
-          )
-          .innerHTML = "";
-
-      }
-
-
-      if (
-        posts.length === 0 &&
-        reset
-      ) {
-
-        document
-          .getElementById(
-            "postsContainer"
-          )
-          .innerHTML = `
-            <div class="empty-state">
-              No posts yet. Be the first to post.
-            </div>
-          `;
-
-      } else {
-
-        const html =
-          await buildPostsHTML(
-            posts
-          );
-
-
-        document
-          .getElementById(
-            "postsContainer"
-          )
-          .insertAdjacentHTML(
-            "beforeend",
-            html
-          );
-
-      }
-
-
-      postsOffset +=
-        posts.length;
-
-
-      document
-        .getElementById(
-          "loadMoreContainer"
-        )
-        .classList.toggle(
-          "hidden",
-          !morePostsAvailable
-        );
+      return;
 
     }
 
+
+    if (reset) {
+
+      /*
+        در حالت Refresh فقط یک بار
+        کل Feed را می‌سازیم.
+      */
+
+      container.innerHTML =
+        html;
+
+    } else {
+
+      container.insertAdjacentHTML(
+        "beforeend",
+        html
+      );
+
+    }
+
+  }
+
+
+  postsOffset +=
+    posts.length;
+
+
+  document
+    .getElementById(
+      "loadMoreContainer"
+    )
+    .classList.toggle(
+      "hidden",
+      !morePostsAvailable
+    );
+
+}
 
     async function loadMorePosts() {
 
