@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Project X</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -17,20 +18,26 @@
     :root {
       --bg: #050505;
       --panel: #0b0b0b;
-      --panel2: #111;
+      --panel-2: #111111;
       --border: #222;
-      --text: #fff;
+      --border-light: #303030;
+      --text: #ffffff;
       --muted: #888;
-      --muted2: #666;
+      --muted-2: #666;
+      --success: #7dff9d;
       --danger: #ff7777;
-      --success: #85ffa5;
+    }
+
+    html,
+    body {
+      min-height: 100%;
     }
 
     body {
       background: var(--bg);
       color: var(--text);
       font-family: Arial, Helvetica, sans-serif;
-      min-height: 100vh;
+      line-height: 1.45;
     }
 
     button,
@@ -43,36 +50,84 @@
       cursor: pointer;
     }
 
+    button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
     .hidden {
       display: none !important;
     }
 
-    /* NAVBAR */
+    /* =====================================================
+       BUTTONS
+    ===================================================== */
+
+    .btn {
+      border-radius: 9px;
+      padding: 9px 14px;
+      font-weight: 700;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: #fff;
+      color: #000;
+    }
+
+    .btn-dark {
+      background: #151515;
+      color: #fff;
+      border-color: #333;
+    }
+
+    .btn-danger {
+      background: #170d0d;
+      color: #ff8b8b;
+      border-color: #4a2222;
+    }
+
+    .btn-small {
+      padding: 7px 10px;
+      font-size: 13px;
+    }
+
+    /* =====================================================
+       NAVBAR
+    ===================================================== */
 
     .navbar {
       height: 70px;
       position: sticky;
       top: 0;
       z-index: 50;
+
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       padding: 0 30px;
-      background: rgba(5, 5, 5, 0.95);
+
+      background: rgba(5, 5, 5, 0.96);
       border-bottom: 1px solid var(--border);
       backdrop-filter: blur(12px);
     }
 
     .logo {
       font-size: 24px;
-      font-weight: 800;
+      font-weight: 900;
       letter-spacing: 3px;
     }
 
     .nav-right {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 9px;
     }
 
     .nav-email {
@@ -84,53 +139,32 @@
       font-size: 13px;
     }
 
-    /* BUTTONS */
+    .notification-badge {
+      min-width: 19px;
+      height: 19px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 5px;
 
-    .primary-btn,
-    .login-btn,
-    .logout-btn,
-    .post-btn,
-    .save-btn,
-    .follow-btn,
-    .danger-btn {
-      border: none;
-      border-radius: 9px;
-      padding: 10px 15px;
-      font-weight: 700;
-    }
-
-    .primary-btn,
-    .login-btn,
-    .post-btn,
-    .save-btn,
-    .follow-btn {
       background: #fff;
       color: #000;
+
+      font-size: 11px;
+      font-weight: 800;
     }
 
-    .logout-btn {
-      background: #1b1b1b;
-      color: #fff;
-      border: 1px solid #333;
-    }
-
-    .danger-btn {
-      background: #1b0f0f;
-      color: #ff8b8b;
-      border: 1px solid #412020;
-    }
-
-    button:disabled {
-      opacity: 0.55;
-      cursor: not-allowed;
-    }
-
-    /* MAIN */
+    /* =====================================================
+       LAYOUT
+    ===================================================== */
 
     .layout {
-      max-width: 1400px;
-      margin: auto;
+      max-width: 1450px;
+      margin: 0 auto;
+
       padding: 25px;
+
       display: grid;
       grid-template-columns: 220px minmax(0, 1fr) 260px;
       gap: 25px;
@@ -145,29 +179,52 @@
     .menu {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 7px;
     }
 
     .menu-btn {
+      width: 100%;
       border: none;
       background: transparent;
       color: #aaa;
-      padding: 13px;
-      border-radius: 10px;
+
       text-align: left;
+
+      border-radius: 10px;
+      padding: 13px;
+
       transition: 0.15s;
     }
 
     .menu-btn:hover,
     .menu-btn.active {
       background: #111;
-      color: #fff;
+      color: white;
     }
+
+    .main-column {
+      min-width: 0;
+    }
+
+    .rightbar {
+      position: sticky;
+      top: 95px;
+      height: fit-content;
+    }
+
+    /* =====================================================
+       COMMON
+    ===================================================== */
 
     .panel {
       background: var(--panel);
       border: 1px solid var(--border);
       border-radius: 16px;
+    }
+
+    .card {
+      padding: 18px;
+      margin-bottom: 18px;
     }
 
     .page {
@@ -178,7 +235,55 @@
       display: block;
     }
 
-    /* HOME */
+    .muted {
+      color: var(--muted);
+    }
+
+    .muted-2 {
+      color: var(--muted-2);
+    }
+
+    .empty-state {
+      padding: 35px 20px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    /* =====================================================
+       FORMS
+    ===================================================== */
+
+    .input,
+    .textarea,
+    .search-input {
+      width: 100%;
+
+      border: 1px solid var(--border);
+      border-radius: 10px;
+
+      background: #111;
+      color: #fff;
+
+      outline: none;
+
+      padding: 13px;
+    }
+
+    .input:focus,
+    .textarea:focus,
+    .search-input:focus,
+    .composer textarea:focus {
+      border-color: #444;
+    }
+
+    .textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    /* =====================================================
+       HOME / POSTS
+    ===================================================== */
 
     .composer {
       padding: 18px;
@@ -187,83 +292,165 @@
 
     .composer textarea {
       width: 100%;
-      height: 100px;
-      resize: none;
+      height: 105px;
+      resize: vertical;
+
       background: #111;
-      color: #fff;
+      color: white;
+
       border: 1px solid var(--border);
       border-radius: 12px;
+
       padding: 14px;
       outline: none;
     }
 
-    .composer textarea:focus,
-    .input:focus,
-    .search-input:focus {
+    .composer-tools {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      gap: 12px;
+
+      margin-top: 12px;
+    }
+
+    .composer-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .file-label {
+      display: inline-flex;
+      align-items: center;
+
+      border: 1px solid #333;
+      background: #111;
+      color: #aaa;
+
+      border-radius: 9px;
+      padding: 8px 11px;
+
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .file-label:hover {
+      color: white;
       border-color: #444;
     }
 
-    .composer-bottom {
+    #postImageInput {
+      display: none;
+    }
+
+    .image-preview {
       margin-top: 12px;
-      display: flex;
-      justify-content: flex-end;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      max-width: 500px;
+    }
+
+    .image-preview img {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
     }
 
     .post {
-      padding: 18px;
       margin-bottom: 20px;
+      padding: 18px;
     }
 
     .post-header {
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 14px;
     }
 
     .avatar {
-      width: 42px;
-      height: 42px;
-      flex: 0 0 42px;
+      width: 44px;
+      height: 44px;
+
+      flex: 0 0 44px;
+
       border-radius: 50%;
+
       background: #fff;
       color: #000;
+
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 800;
+
+      font-weight: 900;
+
+      overflow: hidden;
     }
 
-    .avatar.large {
-      width: 86px;
-      height: 86px;
-      flex-basis: 86px;
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .avatar-large {
+      width: 90px;
+      height: 90px;
+      flex-basis: 90px;
       font-size: 28px;
     }
 
-    .username {
-      font-weight: 700;
+    .post-author {
+      font-weight: 800;
+      cursor: pointer;
     }
 
-    .post-time {
-      margin-top: 3px;
+    .post-author:hover {
+      text-decoration: underline;
+    }
+
+    .post-meta {
+      color: var(--muted-2);
       font-size: 12px;
-      color: var(--muted2);
+      margin-top: 2px;
     }
 
-    .post-text {
+    .post-content {
+      margin-top: 14px;
+
       color: #ddd;
-      line-height: 1.65;
+
       white-space: pre-wrap;
       overflow-wrap: anywhere;
-      margin-bottom: 16px;
+    }
+
+    .post-media {
+      margin-top: 14px;
+      border-radius: 12px;
+      overflow: hidden;
+
+      border: 1px solid var(--border);
+    }
+
+    .post-media img {
+      width: 100%;
+      max-height: 600px;
+      object-fit: contain;
+      background: #000;
     }
 
     .post-actions {
       display: flex;
+      flex-wrap: wrap;
       gap: 18px;
-      padding-top: 14px;
-      border-top: 1px solid #1d1d1d;
+
+      padding-top: 15px;
+      margin-top: 15px;
+
+      border-top: 1px solid var(--border);
     }
 
     .action-btn {
@@ -271,152 +458,432 @@
       background: transparent;
       color: var(--muted);
       padding: 0;
+      font-size: 14px;
     }
 
-    .action-btn:hover {
-      color: #fff;
+    .action-btn:hover,
+    .action-btn.active {
+      color: white;
     }
 
-    .action-btn.liked {
-      color: #fff;
+    .post-menu {
+      margin-left: auto;
+      display: flex;
+      gap: 10px;
     }
 
-    .empty-state {
-      padding: 30px;
-      text-align: center;
-      color: var(--muted);
+    /* =====================================================
+       COMMENTS
+    ===================================================== */
+
+    .comments-area {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #1c1c1c;
     }
 
-    /* RIGHT SIDEBAR */
-
-    .rightbar {
-      position: sticky;
-      top: 95px;
-      height: fit-content;
-    }
-
-    .card {
-      padding: 18px;
-      margin-bottom: 18px;
-    }
-
-    .card h3 {
+    .comment-form {
+      display: flex;
+      gap: 8px;
       margin-bottom: 15px;
     }
 
-    .trend {
-      color: var(--muted);
-      margin-bottom: 13px;
+    .comment-form input {
+      flex: 1;
+      min-width: 0;
     }
 
-    /* EXPLORE */
+    .comment {
+      display: flex;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid #171717;
+    }
 
-    .search-wrap {
+    .comment:last-child {
+      border-bottom: none;
+    }
+
+    .comment .avatar {
+      width: 34px;
+      height: 34px;
+      flex-basis: 34px;
+      font-size: 12px;
+    }
+
+    .comment-body {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .comment-top {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .comment-author {
+      font-weight: 700;
+    }
+
+    .comment-time {
+      color: var(--muted-2);
+      font-size: 11px;
+    }
+
+    .comment-content {
+      color: #ccc;
+      margin-top: 3px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .comment-actions {
+      display: flex;
+      gap: 14px;
+      margin-top: 5px;
+    }
+
+    .comment-action {
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      padding: 0;
+      font-size: 12px;
+    }
+
+    /* =====================================================
+       EXPLORE
+    ===================================================== */
+
+    .search-box {
       margin-bottom: 20px;
     }
 
-    .search-input {
-      width: 100%;
-      padding: 13px;
-      border-radius: 10px;
-      background: #111;
-      color: #fff;
-      border: 1px solid var(--border);
-      outline: none;
+    .section-title {
+      margin-bottom: 14px;
     }
 
-    .explore-grid {
+    .people-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .person-card {
+      padding: 15px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 15px;
+    }
+
+    .person-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      min-width: 0;
+    }
+
+    .person-info {
+      min-width: 0;
+    }
+
+    .person-name {
+      font-weight: 800;
+    }
+
+    .person-username {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 2px;
+    }
+
+    .person-bio {
+      color: #777;
+      font-size: 13px;
+
+      margin-top: 5px;
+
+      overflow-wrap: anywhere;
+    }
+
+    .topics-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 15px;
     }
 
-    .explore-card {
+    .topic-card {
       padding: 20px;
-      min-height: 145px;
-      transition: 0.15s;
+      min-height: 130px;
     }
 
-    .explore-card:hover {
-      border-color: #3a3a3a;
-      transform: translateY(-2px);
-    }
-
-    .explore-title {
+    .topic-title {
+      font-weight: 800;
       font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 9px;
+      margin-bottom: 8px;
     }
 
-    .muted {
-      color: var(--muted);
+    /* =====================================================
+       PROFILE
+    ===================================================== */
+
+    .profile-header {
+      padding: 22px;
     }
 
-    /* ACCOUNT */
-
-    .account-card {
-      padding: 24px;
-    }
-
-    .account-top {
+    .profile-top {
       display: flex;
       align-items: center;
       gap: 18px;
-      margin-bottom: 25px;
     }
 
-    .account-meta h2 {
-      margin-bottom: 7px;
+    .profile-name {
+      font-size: 23px;
+      font-weight: 900;
     }
 
-    .account-email {
+    .profile-username {
       color: var(--muted);
-      word-break: break-word;
+      margin-top: 3px;
     }
 
-    .account-section {
+    .profile-email {
+      color: var(--muted);
+      margin-top: 4px;
+      font-size: 13px;
+    }
+
+    .profile-bio {
+      color: #ccc;
+      margin-top: 15px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .profile-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+
+      margin-top: 17px;
+    }
+
+    .profile-stats {
+      display: flex;
+      gap: 28px;
+      margin-top: 20px;
+    }
+
+    .stat-number {
+      font-weight: 900;
+      font-size: 21px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    /* =====================================================
+       ACCOUNT
+    ===================================================== */
+
+    .profile-edit {
       margin-top: 20px;
       padding-top: 20px;
       border-top: 1px solid var(--border);
     }
 
-    .profile-form {
+    .form-grid {
       display: grid;
       gap: 12px;
     }
 
-    .input,
-    .textarea {
-      width: 100%;
-      background: #111;
-      color: #fff;
-      border: 1px solid var(--border);
-      outline: none;
-      border-radius: 10px;
-      padding: 13px;
-    }
+    /* =====================================================
+       NOTIFICATIONS
+    ===================================================== */
 
-    .textarea {
-      height: 100px;
-      resize: vertical;
-    }
+    .notification {
+      padding: 15px;
 
-    .account-actions {
       display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 12px;
+
+      border-bottom: 1px solid var(--border);
+
+      cursor: pointer;
     }
 
-    /* MODAL */
+    .notification:last-child {
+      border-bottom: none;
+    }
+
+    .notification.unread {
+      background: #0f0f0f;
+    }
+
+    .notification-message {
+      color: #ddd;
+    }
+
+    .notification-time {
+      color: var(--muted-2);
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    /* =====================================================
+       MESSAGES
+    ===================================================== */
+
+    .messages-layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      min-height: 600px;
+      overflow: hidden;
+    }
+
+    .conversation-list {
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+    }
+
+    .conversation-item {
+      padding: 14px;
+      border-bottom: 1px solid var(--border);
+
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      cursor: pointer;
+    }
+
+    .conversation-item:hover,
+    .conversation-item.active {
+      background: #111;
+    }
+
+    .conversation-info {
+      min-width: 0;
+    }
+
+    .conversation-name {
+      font-weight: 800;
+    }
+
+    .conversation-preview {
+      color: var(--muted);
+      font-size: 12px;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .chat-area {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .chat-header {
+      padding: 15px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 16px;
+
+      min-height: 450px;
+      max-height: 500px;
+
+      overflow-y: auto;
+
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .message-bubble-wrap {
+      display: flex;
+    }
+
+    .message-bubble-wrap.mine {
+      justify-content: flex-end;
+    }
+
+    .message-bubble {
+      max-width: 75%;
+
+      background: #151515;
+      border: 1px solid #252525;
+
+      border-radius: 13px;
+
+      padding: 9px 12px;
+
+      color: #ddd;
+
+      overflow-wrap: anywhere;
+    }
+
+    .message-bubble.mine {
+      background: #fff;
+      color: #000;
+      border-color: #fff;
+    }
+
+    .message-time {
+      margin-top: 4px;
+      font-size: 10px;
+      opacity: 0.55;
+    }
+
+    .chat-form {
+      padding: 12px;
+      display: flex;
+      gap: 8px;
+
+      border-top: 1px solid var(--border);
+    }
+
+    .chat-form input {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* =====================================================
+       RIGHT BAR
+    ===================================================== */
+
+    .trend {
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    /* =====================================================
+       MODALS
+    ===================================================== */
 
     .overlay {
       position: fixed;
       inset: 0;
       z-index: 100;
+
       display: none;
       align-items: center;
       justify-content: center;
+
       padding: 20px;
+
       background: rgba(0, 0, 0, 0.88);
     }
 
@@ -426,20 +893,29 @@
 
     .modal {
       width: 100%;
-      max-width: 430px;
+      max-width: 460px;
+
       max-height: 90vh;
       overflow-y: auto;
+
       background: var(--panel);
+
       border: 1px solid var(--border);
       border-radius: 18px;
-      padding: 28px;
+
+      padding: 26px;
+    }
+
+    .modal-wide {
+      max-width: 700px;
     }
 
     .modal-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 10px;
+
+      margin-bottom: 12px;
     }
 
     .close-btn {
@@ -452,7 +928,6 @@
     .subtitle {
       color: #777;
       font-size: 14px;
-      line-height: 1.5;
       margin-bottom: 20px;
     }
 
@@ -464,10 +939,13 @@
 
     .tab {
       flex: 1;
+
       border: 1px solid var(--border);
+      border-radius: 9px;
+
       background: #111;
       color: #aaa;
-      border-radius: 9px;
+
       padding: 10px;
     }
 
@@ -481,21 +959,15 @@
       gap: 12px;
     }
 
-    .auth-submit {
-      border: none;
-      background: #fff;
-      color: #000;
-      border-radius: 10px;
-      padding: 12px;
-      font-weight: 800;
-    }
-
     .text-btn {
       border: none;
       background: transparent;
       color: #aaa;
-      padding: 0;
+
       margin-top: 15px;
+
+      padding: 0;
+
       text-decoration: underline;
     }
 
@@ -503,55 +975,53 @@
       margin-top: 14px;
       color: #aaa;
       font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .message.error {
-      color: var(--danger);
     }
 
     .message.success {
       color: var(--success);
     }
 
-    /* TOAST */
+    .message.error {
+      color: var(--danger);
+    }
+
+    /* =====================================================
+       TOAST
+    ===================================================== */
 
     .toast-container {
       position: fixed;
       right: 18px;
       bottom: 18px;
+
       z-index: 200;
+
       display: grid;
-      gap: 10px;
+      gap: 8px;
     }
 
     .toast {
-      max-width: 350px;
+      max-width: 360px;
+
       background: #111;
-      color: #fff;
+      color: white;
+
       border: 1px solid #333;
-      border-radius: 12px;
-      padding: 13px 15px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.4);
-      animation: toastIn .2s ease-out;
+      border-radius: 11px;
+
+      padding: 12px 14px;
+
+      box-shadow:
+        0 15px 40px rgba(0,0,0,.4);
     }
 
-    @keyframes toastIn {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+    /* =====================================================
+       RESPONSIVE
+    ===================================================== */
 
-    /* RESPONSIVE */
-
-    @media (max-width: 950px) {
+    @media (max-width: 1050px) {
       .layout {
-        grid-template-columns: 180px minmax(0, 1fr);
+        grid-template-columns: 190px minmax(0, 1fr);
       }
 
       .rightbar {
@@ -559,23 +1029,19 @@
       }
     }
 
-    @media (max-width: 650px) {
+    @media (max-width: 750px) {
       .navbar {
-        padding: 0 15px;
-      }
-
-      .nav-email {
-        display: none;
+        padding: 0 14px;
       }
 
       .layout {
         display: block;
-        padding: 15px;
+        padding: 14px;
       }
 
       .sidebar {
         position: static;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
       }
 
       .menu {
@@ -585,22 +1051,36 @@
 
       .menu-btn {
         white-space: nowrap;
+        width: auto;
       }
 
-      .explore-grid {
+      .nav-email {
+        display: none;
+      }
+
+      .topics-grid {
         grid-template-columns: 1fr;
       }
 
-      .account-top {
-        align-items: flex-start;
+      .messages-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .conversation-list {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        max-height: 220px;
       }
     }
   </style>
 </head>
 
+
 <body>
 
-  <!-- NAVBAR -->
+  <!-- =====================================================
+       NAVBAR
+  ===================================================== -->
 
   <header class="navbar">
 
@@ -609,11 +1089,11 @@
     </div>
 
     <div
-      class="nav-right"
-      id="navRight">
+      id="navRight"
+      class="nav-right">
 
       <button
-        class="login-btn"
+        class="btn btn-primary"
         onclick="openAuth('login')">
         Sign in
       </button>
@@ -623,11 +1103,15 @@
   </header>
 
 
-  <!-- MAIN -->
+  <!-- =====================================================
+       MAIN
+  ===================================================== -->
 
   <main class="layout">
 
-    <!-- LEFT SIDEBAR -->
+    <!-- ===================================================
+         SIDEBAR
+    =================================================== -->
 
     <aside class="sidebar">
 
@@ -640,6 +1124,7 @@
           🏠 Home
         </button>
 
+
         <button
           class="menu-btn"
           data-page="explore"
@@ -647,12 +1132,19 @@
           🔎 Explore
         </button>
 
+
         <button
           class="menu-btn"
-          data-page="account"
-          onclick="showPage('account')">
-          👤 Account
+          data-page="notifications"
+          onclick="showPage('notifications')">
+          🔔 Notifications
+          <span
+            id="notificationBadge"
+            class="notification-badge hidden">
+            0
+          </span>
         </button>
+
 
         <button
           class="menu-btn"
@@ -661,11 +1153,20 @@
           💬 Messages
         </button>
 
+
         <button
           class="menu-btn"
-          data-page="notifications"
-          onclick="showPage('notifications')">
-          🔔 Notifications
+          data-page="bookmarks"
+          onclick="showPage('bookmarks')">
+          🔖 Bookmarks
+        </button>
+
+
+        <button
+          class="menu-btn"
+          data-page="account"
+          onclick="showPage('account')">
+          👤 Account
         </button>
 
       </nav>
@@ -673,15 +1174,21 @@
     </aside>
 
 
-    <!-- CENTER -->
+    <!-- ===================================================
+         CENTER
+    =================================================== -->
 
-    <section>
+    <section class="main-column">
 
-      <!-- HOME -->
+
+      <!-- =================================================
+           HOME
+      ================================================= -->
 
       <div
         id="page-home"
         class="page active">
+
 
         <div
           class="composer panel">
@@ -691,11 +1198,47 @@
             maxlength="2000"
             placeholder="What's happening?"></textarea>
 
-          <div class="composer-bottom">
+
+          <div
+            id="postImagePreview"
+            class="image-preview hidden">
+
+            <img
+              id="postPreviewImage"
+              alt="Preview">
+
+          </div>
+
+
+          <div class="composer-tools">
+
+            <div class="composer-left">
+
+              <label
+                class="file-label">
+
+                📷 Add image
+
+                <input
+                  id="postImageInput"
+                  type="file"
+                  accept="image/*"
+                  onchange="previewPostImage(event)">
+
+              </label>
+
+
+              <span
+                id="postImageName"
+                class="muted-2">
+              </span>
+
+            </div>
+
 
             <button
               id="postButton"
-              class="post-btn"
+              class="btn btn-primary"
               onclick="createPost()">
               Post
             </button>
@@ -713,66 +1256,105 @@
 
         </div>
 
+
+        <div
+          id="loadMoreContainer"
+          class="hidden"
+          style="text-align:center; margin:20px 0;">
+
+          <button
+            id="loadMoreButton"
+            class="btn btn-dark"
+            onclick="loadMorePosts()">
+            Load more
+          </button>
+
+        </div>
+
       </div>
 
 
-      <!-- EXPLORE -->
+      <!-- =================================================
+           EXPLORE
+      ================================================= -->
 
       <div
         id="page-explore"
         class="page">
 
-        <div class="search-wrap">
+
+        <div class="search-box">
 
           <input
             id="exploreSearch"
             class="search-input"
-            type="text"
-            placeholder="Search topics..."
-            oninput="filterExplore()">
+            placeholder="Search people..."
+            oninput="searchExplore()">
 
         </div>
 
 
+        <h2 class="section-title">
+          People
+        </h2>
+
+
         <div
-          id="exploreGrid"
-          class="explore-grid">
+          id="peopleContainer"
+          class="people-list">
+
+          <div class="empty-state">
+            Search for a username or name.
+          </div>
+
+        </div>
+
+
+        <br>
+
+
+        <h2 class="section-title">
+          Topics
+        </h2>
+
+
+        <div class="topics-grid">
 
           <div
-            class="explore-card panel"
+            class="topic-card panel"
             data-search="technology tech">
 
-            <div class="explore-title">
+            <div class="topic-title">
               #Technology
             </div>
 
             <div class="muted">
-              Discover technology discussions.
+              Technology and innovation.
             </div>
 
           </div>
 
 
           <div
-            class="explore-card panel"
-            data-search="mma fighting ufc">
+            class="topic-card panel"
+            data-search="mma ufc fighting">
 
-            <div class="explore-title">
+            <div class="topic-title">
               #MMA
             </div>
 
             <div class="muted">
-              Fight news, training and community.
+              MMA, UFC, training and combat sports.
             </div>
 
           </div>
 
 
           <div
-            class="explore-card panel"
+            class="topic-card panel"
             data-search="gaming games">
 
-            <div class="explore-title">
+            <div class="topic-title">
               #Gaming
             </div>
 
@@ -784,45 +1366,45 @@
 
 
           <div
-            class="explore-card panel"
-            data-search="movies film cinema">
+            class="topic-card panel"
+            data-search="movies cinema film">
 
-            <div class="explore-title">
+            <div class="topic-title">
               #Movies
             </div>
 
             <div class="muted">
-              Talk about movies and stories.
+              Movies, cinema and discussion.
             </div>
 
           </div>
 
 
           <div
-            class="explore-card panel"
-            data-search="fitness training sport">
+            class="topic-card panel"
+            data-search="fitness sport training">
 
-            <div class="explore-title">
+            <div class="topic-title">
               #Fitness
             </div>
 
             <div class="muted">
-              Training, sports and active lifestyles.
+              Sports and fitness.
             </div>
 
           </div>
 
 
           <div
-            class="explore-card panel"
+            class="topic-card panel"
             data-search="community social">
 
-            <div class="explore-title">
+            <div class="topic-title">
               #Community
             </div>
 
             <div class="muted">
-              Discover new communities.
+              Discover communities.
             </div>
 
           </div>
@@ -832,40 +1414,184 @@
       </div>
 
 
-      <!-- ACCOUNT -->
+      <!-- =================================================
+           NOTIFICATIONS
+      ================================================= -->
+
+      <div
+        id="page-notifications"
+        class="page">
+
+        <div class="panel">
+
+          <div
+            style="padding:18px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
+
+            <h2>
+              Notifications
+            </h2>
+
+            <button
+              class="btn btn-dark btn-small"
+              onclick="markAllNotificationsRead()">
+              Mark all read
+            </button>
+
+          </div>
+
+
+          <div id="notificationsContainer">
+
+            <div class="empty-state">
+              Loading...
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           MESSAGES
+      ================================================= -->
+
+      <div
+        id="page-messages"
+        class="page">
+
+        <div
+          class="messages-layout panel">
+
+
+          <div
+            id="conversationList"
+            class="conversation-list">
+
+            <div class="empty-state">
+              No conversations yet.
+            </div>
+
+          </div>
+
+
+          <div class="chat-area">
+
+
+            <div
+              id="chatHeader"
+              class="chat-header">
+
+              <span class="muted">
+                Select a conversation
+              </span>
+
+            </div>
+
+
+            <div
+              id="chatMessages"
+              class="chat-messages">
+
+              <div class="empty-state">
+                Select a conversation to start messaging.
+              </div>
+
+            </div>
+
+
+            <form
+              id="chatForm"
+              class="chat-form hidden"
+              onsubmit="sendMessage(event)">
+
+              <input
+                id="messageInput"
+                class="input"
+                maxlength="5000"
+                placeholder="Write a message...">
+
+              <button
+                id="messageSendButton"
+                class="btn btn-primary">
+                Send
+              </button>
+
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           BOOKMARKS
+      ================================================= -->
+
+      <div
+        id="page-bookmarks"
+        class="page">
+
+        <h2
+          style="margin-bottom:18px;">
+          Saved posts
+        </h2>
+
+
+        <div id="bookmarksContainer">
+
+          <div class="empty-state">
+            Loading...
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           ACCOUNT
+      ================================================= -->
 
       <div
         id="page-account"
         class="page">
 
-        <div
-          class="account-card panel">
 
-          <div class="account-top">
+        <div
+          class="panel profile-header">
+
+          <div class="profile-top">
 
             <div
               id="accountAvatar"
-              class="avatar large">
+              class="avatar avatar-large">
               ?
             </div>
 
 
-            <div class="account-meta">
+            <div>
 
-              <h2
-                id="accountDisplayName">
+              <div
+                id="accountDisplayName"
+                class="profile-name">
                 Guest
-              </h2>
+              </div>
+
 
               <div
                 id="accountUsername"
-                class="muted">
+                class="profile-username">
                 @guest
               </div>
 
+
               <div
                 id="accountEmail"
-                class="account-email">
+                class="profile-email">
                 Not signed in
               </div>
 
@@ -875,18 +1601,49 @@
 
 
           <div
-            class="account-section"
-            id="profileSection">
+            class="profile-stats">
+
+            <div>
+              <div
+                id="accountFollowers"
+                class="stat-number">
+                0
+              </div>
+
+              <div class="stat-label">
+                Followers
+              </div>
+            </div>
+
+
+            <div>
+              <div
+                id="accountFollowing"
+                class="stat-number">
+                0
+              </div>
+
+              <div class="stat-label">
+                Following
+              </div>
+            </div>
+
+          </div>
+
+
+          <div
+            id="profileEditSection"
+            class="profile-edit hidden">
 
             <h3>
-              Profile
+              Edit profile
             </h3>
 
             <br>
 
 
             <form
-              class="profile-form"
+              class="form-grid"
               onsubmit="saveProfile(event)">
 
               <input
@@ -909,31 +1666,63 @@
                 placeholder="Bio"></textarea>
 
 
-              <div class="account-actions">
+              <div>
 
-                <button
-                  id="saveProfileButton"
-                  class="save-btn">
-                  Save profile
-                </button>
+                <label
+                  class="file-label">
 
-                <button
-                  type="button"
-                  class="danger-btn"
-                  onclick="logout()">
-                  Logout
-                </button>
+                  🖼 Change avatar
+
+                  <input
+                    id="avatarInput"
+                    type="file"
+                    accept="image/*"
+                    onchange="uploadAvatar(event)"
+                    style="display:none;">
+
+                </label>
 
               </div>
 
+
+              <button
+                id="saveProfileButton"
+                class="btn btn-primary">
+                Save profile
+              </button>
+
             </form>
+
+
+            <div
+              style="margin-top:20px; padding-top:20px; border-top:1px solid var(--border);">
+
+              <h3>
+                Security
+              </h3>
+
+              <br>
+
+              <button
+                class="btn btn-dark"
+                onclick="openChangePassword()">
+                Change password
+              </button>
+
+              <button
+                class="btn btn-danger"
+                onclick="logout()">
+                Logout
+              </button>
+
+            </div>
 
           </div>
 
 
           <div
-            class="account-section"
-            id="guestAccountSection">
+            id="guestAccountSection"
+            class="profile-edit">
 
             <h3>
               Account
@@ -942,13 +1731,13 @@
             <br>
 
             <p class="muted">
-              Sign in to create and manage your profile.
+              Sign in to create your profile and interact with Project X.
             </p>
 
             <br>
 
             <button
-              class="primary-btn"
+              class="btn btn-primary"
               onclick="openAuth('login')">
               Sign in
             </button>
@@ -960,46 +1749,19 @@
       </div>
 
 
-      <!-- MESSAGES -->
+      <!-- =================================================
+           PROFILE VIEW
+      ================================================= -->
 
       <div
-        id="page-messages"
+        id="page-profile"
         class="page">
 
-        <div class="card panel">
+        <div id="profileViewContainer">
 
-          <h2>
-            Messages
-          </h2>
-
-          <br>
-
-          <p class="muted">
-            Messaging will be added after the core system is stable.
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <!-- NOTIFICATIONS -->
-
-      <div
-        id="page-notifications"
-        class="page">
-
-        <div class="card panel">
-
-          <h2>
-            Notifications
-          </h2>
-
-          <br>
-
-          <p class="muted">
-            Notifications will be added after the core system is stable.
-          </p>
+          <div class="empty-state">
+            Loading profile...
+          </div>
 
         </div>
 
@@ -1008,7 +1770,9 @@
     </section>
 
 
-    <!-- RIGHT SIDEBAR -->
+    <!-- ===================================================
+         RIGHT BAR
+    =================================================== -->
 
     <aside class="rightbar">
 
@@ -1054,7 +1818,9 @@
   </main>
 
 
-  <!-- AUTH MODAL -->
+  <!-- =====================================================
+       AUTH MODAL
+  ===================================================== -->
 
   <div
     id="authOverlay"
@@ -1102,7 +1868,6 @@
 
 
       <form
-        id="authForm"
         class="auth-form"
         onsubmit="handleAuth(event)">
 
@@ -1111,7 +1876,6 @@
           class="input"
           type="email"
           placeholder="Email"
-          autocomplete="email"
           required>
 
         <input
@@ -1120,12 +1884,11 @@
           type="password"
           placeholder="Password"
           minlength="6"
-          autocomplete="current-password"
           required>
 
         <button
           id="authSubmit"
-          class="auth-submit">
+          class="btn btn-primary">
           Login
         </button>
 
@@ -1150,7 +1913,9 @@
   </div>
 
 
-  <!-- FORGOT PASSWORD -->
+  <!-- =====================================================
+       FORGOT PASSWORD
+  ===================================================== -->
 
   <div
     id="forgotOverlay"
@@ -1174,7 +1939,7 @@
 
 
       <div class="subtitle">
-        Enter your email and we'll send you a password reset link.
+        Enter your email and we'll send a reset link.
       </div>
 
 
@@ -1191,7 +1956,7 @@
 
         <button
           id="resetSubmit"
-          class="auth-submit">
+          class="btn btn-primary">
           Send reset link
         </button>
 
@@ -1208,7 +1973,9 @@
   </div>
 
 
-  <!-- UPDATE PASSWORD -->
+  <!-- =====================================================
+       UPDATE PASSWORD
+  ===================================================== -->
 
   <div
     id="updatePasswordOverlay"
@@ -1219,14 +1986,14 @@
       <div class="modal-header">
 
         <h2>
-          Create new password
+          New password
         </h2>
 
       </div>
 
 
       <div class="subtitle">
-        Choose a new password for your Project X account.
+        Choose a new password for your account.
       </div>
 
 
@@ -1238,21 +2005,21 @@
           id="newPassword"
           class="input"
           type="password"
-          placeholder="New password"
           minlength="6"
+          placeholder="New password"
           required>
 
         <input
           id="confirmNewPassword"
           class="input"
           type="password"
-          placeholder="Confirm new password"
           minlength="6"
+          placeholder="Confirm password"
           required>
 
         <button
           id="updatePasswordButton"
-          class="auth-submit">
+          class="btn btn-primary">
           Change password
         </button>
 
@@ -1269,7 +2036,208 @@
   </div>
 
 
-  <!-- TOAST -->
+  <!-- =====================================================
+       PROFILE MODAL
+  ===================================================== -->
+
+  <div
+    id="profileModalOverlay"
+    class="overlay">
+
+    <div
+      class="modal modal-wide">
+
+      <div class="modal-header">
+
+        <h2>
+          Profile
+        </h2>
+
+        <button
+          class="close-btn"
+          onclick="closeProfileModal()">
+          ×
+        </button>
+
+      </div>
+
+
+      <div id="profileModalContent">
+
+        <div class="empty-state">
+          Loading...
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       REPORT MODAL
+  ===================================================== -->
+
+  <div
+    id="reportOverlay"
+    class="overlay">
+
+    <div class="modal">
+
+      <div class="modal-header">
+
+        <h2>
+          Report
+        </h2>
+
+        <button
+          class="close-btn"
+          onclick="closeReport()">
+          ×
+        </button>
+
+      </div>
+
+
+      <div class="subtitle">
+        Tell us why you're reporting this content.
+      </div>
+
+
+      <form
+        class="auth-form"
+        onsubmit="submitReport(event)">
+
+        <select
+          id="reportReason"
+          class="input"
+          required>
+
+          <option value="">
+            Select a reason
+          </option>
+
+          <option value="Spam">
+            Spam
+          </option>
+
+          <option value="Harassment">
+            Harassment
+          </option>
+
+          <option value="Hate">
+            Hate or abuse
+          </option>
+
+          <option value="Violence">
+            Violent content
+          </option>
+
+          <option value="Impersonation">
+            Impersonation
+          </option>
+
+          <option value="Other">
+            Other
+          </option>
+
+        </select>
+
+
+        <textarea
+          id="reportDetails"
+          class="textarea"
+          maxlength="2000"
+          placeholder="Additional details (optional)"></textarea>
+
+
+        <button
+          id="reportSubmit"
+          class="btn btn-primary">
+          Submit report
+        </button>
+
+      </form>
+
+
+      <div
+        id="reportMessage"
+        class="message">
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       CHANGE PASSWORD
+  ===================================================== -->
+
+  <div
+    id="changePasswordOverlay"
+    class="overlay">
+
+    <div class="modal">
+
+      <div class="modal-header">
+
+        <h2>
+          Change password
+        </h2>
+
+        <button
+          class="close-btn"
+          onclick="closeChangePassword()">
+          ×
+        </button>
+
+      </div>
+
+
+      <form
+        class="auth-form"
+        onsubmit="changePassword(event)">
+
+        <input
+          id="accountNewPassword"
+          class="input"
+          type="password"
+          minlength="6"
+          placeholder="New password"
+          required>
+
+        <input
+          id="accountConfirmPassword"
+          class="input"
+          type="password"
+          minlength="6"
+          placeholder="Confirm password"
+          required>
+
+        <button
+          id="accountPasswordButton"
+          class="btn btn-primary">
+          Change password
+        </button>
+
+      </form>
+
+
+      <div
+        id="accountPasswordMessage"
+        class="message">
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       TOAST
+  ===================================================== -->
 
   <div
     id="toastContainer"
@@ -1307,15 +2275,24 @@
     ===================================================== */
 
     let currentUser = null;
-
     let currentProfile = null;
 
     let authMode = "login";
 
+    let currentConversationId = null;
 
-    /* =====================================================
-       SITE URL
-    ===================================================== */
+    let currentConversationUserId = null;
+
+    let currentProfileViewId = null;
+
+    let reportTarget = null;
+
+    let postsOffset = 0;
+
+    const POST_PAGE_SIZE = 20;
+
+    let morePostsAvailable = true;
+
 
     const SITE_URL =
       window.location.origin +
@@ -1323,7 +2300,7 @@
 
 
     /* =====================================================
-       INITIALIZATION
+       INIT
     ===================================================== */
 
     document.addEventListener(
@@ -1336,15 +2313,71 @@
 
       await loadCurrentUser();
 
-      await loadPosts();
-
       updateNavigation();
+
+      await loadPosts(true);
+
+      if (currentUser) {
+
+        await loadNotificationBadge();
+
+      }
 
     }
 
 
     /* =====================================================
-       CURRENT USER
+       AUTH STATE
+    ===================================================== */
+
+    supabaseClient.auth
+      .onAuthStateChange(
+        (event) => {
+
+          if (
+            event ===
+            "PASSWORD_RECOVERY"
+          ) {
+
+            setTimeout(
+              () => {
+
+                document
+                  .getElementById(
+                    "updatePasswordOverlay"
+                  )
+                  .classList.add(
+                    "show"
+                  );
+
+              },
+              0
+            );
+
+          }
+
+
+          setTimeout(
+            async () => {
+
+              await loadCurrentUser();
+
+              updateNavigation();
+
+              await loadPosts(true);
+
+              await loadNotificationBadge();
+
+            },
+            0
+          );
+
+        }
+      );
+
+
+    /* =====================================================
+       LOAD CURRENT USER
     ===================================================== */
 
     async function loadCurrentUser() {
@@ -1359,10 +2392,7 @@
       if (error) {
 
         currentUser = null;
-
         currentProfile = null;
-
-        updateNavigation();
 
         return;
 
@@ -1375,7 +2405,7 @@
 
       if (currentUser) {
 
-        await loadProfile();
+        await loadCurrentProfile();
 
       } else {
 
@@ -1384,9 +2414,7 @@
       }
 
 
-      updateNavigation();
-
-      updateAccountPage();
+      updateAccountUI();
 
     }
 
@@ -1395,12 +2423,11 @@
        PROFILE
     ===================================================== */
 
-    async function loadProfile() {
+    async function loadCurrentProfile() {
 
       if (!currentUser) {
 
         currentProfile = null;
-
         return;
 
       }
@@ -1413,16 +2440,16 @@
         await supabaseClient
           .from("profiles")
           .select("*")
-          .eq("id", currentUser.id)
+          .eq(
+            "id",
+            currentUser.id
+          )
           .maybeSingle();
 
 
       if (error) {
 
-        console.error(
-          "Profile error:",
-          error
-        );
+        console.error(error);
 
         currentProfile = null;
 
@@ -1436,7 +2463,9 @@
     }
 
 
-    async function saveProfile(event) {
+    async function saveProfile(
+      event
+    ) {
 
       event.preventDefault();
 
@@ -1444,7 +2473,6 @@
       if (!currentUser) {
 
         openAuth("login");
-
         return;
 
       }
@@ -1456,7 +2484,8 @@
             "profileUsername"
           )
           .value
-          .trim();
+          .trim()
+          .toLowerCase();
 
 
       const displayName =
@@ -1490,127 +2519,230 @@
         "Saving...";
 
 
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from("profiles")
-          .upsert(
-            {
-              id: currentUser.id,
+      try {
 
-              username:
-                username || null,
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .from("profiles")
+            .upsert(
+              {
+                id:
+                  currentUser.id,
 
-              display_name:
-                displayName ||
-                "New User",
+                username:
+                  username || null,
 
-              bio:
+                display_name:
+                  displayName ||
+                  "New User",
 
-                bio
+                bio:
+                  bio
 
-            },
-            {
-              onConflict: "id"
-            }
-          )
-          .select()
-          .single();
-
-
-      button.disabled = false;
-
-      button.textContent =
-        "Save profile";
+              },
+              {
+                onConflict:
+                  "id"
+              }
+            )
+            .select()
+            .single();
 
 
-      if (error) {
+        if (error) {
+          throw error;
+        }
+
+
+        currentProfile = data;
+
+        updateAccountUI();
+
+        await loadPosts(true);
+
+        showToast(
+          "Profile saved.",
+          "success"
+        );
+
+      } catch (error) {
 
         showToast(
           error.message,
           "error"
         );
 
+      } finally {
+
+        button.disabled = false;
+
+        button.textContent =
+          "Save profile";
+
+      }
+
+    }
+
+
+    async function uploadAvatar(
+      event
+    ) {
+
+      if (!currentUser) {
+
+        openAuth("login");
         return;
 
       }
 
 
-      currentProfile =
-        data;
+      const file =
+        event.target.files?.[0];
 
 
-      updateAccountPage();
-
-      await loadPosts();
-
-      showToast(
-        "Profile saved.",
-        "success"
-      );
-
-    }
+      if (!file) {
+        return;
+      }
 
 
-    /* =====================================================
-       NAVIGATION
-    ===================================================== */
-
-    function showPage(
-      pageName
-    ) {
-
-      document
-        .querySelectorAll(
-          ".page"
+      if (
+        !file.type.startsWith(
+          "image/"
         )
-        .forEach(
-          page => {
-            page.classList.remove(
-              "active"
-            );
-          }
+      ) {
+
+        showToast(
+          "Please select an image.",
+          "error"
         );
 
+        event.target.value = "";
 
-      const page =
-        document.getElementById(
-          "page-" + pageName
-        );
-
-
-      if (page) {
-
-        page.classList.add(
-          "active"
-        );
+        return;
 
       }
 
 
-      document
-        .querySelectorAll(
-          ".menu-btn"
-        )
-        .forEach(
-          button => {
-
-            button.classList.toggle(
-              "active",
-              button.dataset.page === pageName
-            );
-
-          }
-        );
-
-
       if (
-        pageName === "account"
+        file.size >
+        1024 * 1024
       ) {
 
-        updateAccountPage();
+        showToast(
+          "Avatar must be 1 MB or smaller.",
+          "error"
+        );
+
+        event.target.value = "";
+
+        return;
+
+      }
+
+
+      const extension =
+        getFileExtension(file.name);
+
+
+      const path =
+        currentUser.id +
+        "/avatar-" +
+        Date.now() +
+        extension;
+
+
+      showToast(
+        "Uploading avatar..."
+      );
+
+
+      try {
+
+        const {
+          error: uploadError
+        } =
+          await supabaseClient
+            .storage
+            .from("avatars")
+            .upload(
+              path,
+              file,
+              {
+                contentType:
+                  file.type,
+                upsert:
+                  false
+              }
+            );
+
+
+        if (uploadError) {
+          throw uploadError;
+        }
+
+
+        const {
+          data
+        } =
+          supabaseClient
+            .storage
+            .from("avatars")
+            .getPublicUrl(path);
+
+
+        const publicUrl =
+          data.publicUrl;
+
+
+        const {
+          error:
+            profileError
+        } =
+          await supabaseClient
+            .from("profiles")
+            .update(
+              {
+                avatar_url:
+                  publicUrl
+              }
+            )
+            .eq(
+              "id",
+              currentUser.id
+            );
+
+
+        if (profileError) {
+          throw profileError;
+        }
+
+
+        currentProfile.avatar_url =
+          publicUrl;
+
+
+        updateAccountUI();
+
+        await loadPosts(true);
+
+        showToast(
+          "Avatar updated.",
+          "success"
+        );
+
+      } catch (error) {
+
+        showToast(
+          error.message,
+          "error"
+        );
+
+      } finally {
+
+        event.target.value = "";
 
       }
 
@@ -1621,7 +2753,7 @@
        ACCOUNT UI
     ===================================================== */
 
-    function updateAccountPage() {
+    async function updateAccountUI() {
 
       const avatar =
         document.getElementById(
@@ -1643,9 +2775,9 @@
           "accountEmail"
         );
 
-      const profileSection =
+      const editSection =
         document.getElementById(
-          "profileSection"
+          "profileEditSection"
         );
 
       const guestSection =
@@ -1656,7 +2788,11 @@
 
       if (!currentUser) {
 
-        avatar.textContent = "?";
+        setAvatar(
+          avatar,
+          null,
+          "?"
+        );
 
         displayName.textContent =
           "Guest";
@@ -1667,7 +2803,8 @@
         email.textContent =
           "Not signed in";
 
-        profileSection.classList.add(
+
+        editSection.classList.add(
           "hidden"
         );
 
@@ -1675,12 +2812,25 @@
           "hidden"
         );
 
+
+        document.getElementById(
+          "accountFollowers"
+        ).textContent =
+          "0";
+
+
+        document.getElementById(
+          "accountFollowing"
+        ).textContent =
+          "0";
+
+
         return;
 
       }
 
 
-      profileSection.classList.remove(
+      editSection.classList.remove(
         "hidden"
       );
 
@@ -1689,32 +2839,28 @@
       );
 
 
-      const name =
+      setAvatar(
+        avatar,
+        currentProfile?.avatar_url,
+        currentProfile?.display_name
+      );
+
+
+      displayName.textContent =
         currentProfile?.display_name ||
         "New User";
 
 
-      const userName =
-        currentProfile?.username ||
-        "user";
-
-
-      displayName.textContent =
-        name;
-
-
       username.textContent =
-        "@" + userName;
+        "@" +
+        (
+          currentProfile?.username ||
+          "user"
+        );
 
 
       email.textContent =
         currentUser.email || "";
-
-
-      avatar.textContent =
-        getInitial(
-          name
-        );
 
 
       document
@@ -1743,11 +2889,185 @@
           currentProfile?.bio ||
           "";
 
+
+      await updateFollowCounts(
+        currentUser.id
+      );
+
+    }
+
+
+    async function updateFollowCounts(
+      userId
+    ) {
+
+      if (!userId) {
+        return;
+      }
+
+
+      const followers =
+        await supabaseClient
+          .from("follows")
+          .select(
+            "follower_id",
+            {
+              count: "exact",
+              head: true
+            }
+          )
+          .eq(
+            "following_id",
+            userId
+          );
+
+
+      const following =
+        await supabaseClient
+          .from("follows")
+          .select(
+            "following_id",
+            {
+              count: "exact",
+              head: true
+            }
+          )
+          .eq(
+            "follower_id",
+            userId
+          );
+
+
+      document.getElementById(
+        "accountFollowers"
+      ).textContent =
+        followers.count || 0;
+
+
+      document.getElementById(
+        "accountFollowing"
+      ).textContent =
+        following.count || 0;
+
     }
 
 
     /* =====================================================
-       AUTH MODAL
+       NAVIGATION
+    ===================================================== */
+
+    async function showPage(
+      pageName
+    ) {
+
+      document
+        .querySelectorAll(
+          ".page"
+        )
+        .forEach(
+          page => {
+            page.classList.remove(
+              "active"
+            );
+          }
+        );
+
+
+      const page =
+        document.getElementById(
+          "page-" +
+          pageName
+        );
+
+
+      if (!page) {
+        return;
+      }
+
+
+      page.classList.add(
+        "active"
+      );
+
+
+      document
+        .querySelectorAll(
+          ".menu-btn"
+        )
+        .forEach(
+          button => {
+
+            button.classList.toggle(
+              "active",
+              button.dataset.page ===
+                pageName
+            );
+
+          }
+        );
+
+
+      if (
+        pageName === "account"
+      ) {
+
+        updateAccountUI();
+
+      }
+
+
+      if (
+        pageName === "notifications"
+      ) {
+
+        await loadNotifications();
+
+      }
+
+
+      if (
+        pageName === "messages"
+      ) {
+
+        await loadConversations();
+
+      }
+
+
+      if (
+        pageName === "bookmarks"
+      ) {
+
+        await loadBookmarks();
+
+      }
+
+
+      if (
+        pageName === "explore"
+      ) {
+
+        const query =
+          document
+            .getElementById(
+              "exploreSearch"
+            )
+            .value
+            .trim();
+
+        if (query) {
+
+          await searchExplore();
+
+        }
+
+      }
+
+    }
+
+
+    /* =====================================================
+       AUTH
     ===================================================== */
 
     function openAuth(
@@ -1776,13 +3096,6 @@
         .classList.remove(
           "show"
         );
-
-
-      document
-        .getElementById(
-          "authMessage"
-        )
-        .textContent = "";
 
     }
 
@@ -1868,17 +3181,15 @@
 
 
       const button =
-        document
-          .getElementById(
-            "authSubmit"
-          );
+        document.getElementById(
+          "authSubmit"
+        );
 
 
       const message =
-        document
-          .getElementById(
-            "authMessage"
-          );
+        document.getElementById(
+          "authMessage"
+        );
 
 
       button.disabled = true;
@@ -1889,35 +3200,33 @@
           : "Creating...";
 
 
-      message.className =
-        "message";
-
-      message.textContent =
-        "Please wait...";
-
-
       try {
 
         if (
-          authMode === "signup"
+          authMode ===
+          "signup"
         ) {
 
           const {
             data,
             error
           } =
-            await supabaseClient.auth
+            await supabaseClient
+              .auth
               .signUp(
                 {
                   email,
-
                   password,
 
                   options: {
                     emailRedirectTo:
-                      SITE_URL
-                  }
+                      SITE_URL,
 
+                    data: {
+                      display_name:
+                        "New User"
+                    }
+                  }
                 }
               );
 
@@ -1934,7 +3243,7 @@
             await loadCurrentUser();
 
             showToast(
-              "Account created successfully.",
+              "Account created.",
               "success"
             );
 
@@ -1942,7 +3251,7 @@
 
             showMessage(
               message,
-              "Account created. Check your email to confirm your account.",
+              "Account created. Check your email to verify the account.",
               "success"
             );
 
@@ -1953,7 +3262,8 @@
           const {
             error
           } =
-            await supabaseClient.auth
+            await supabaseClient
+              .auth
               .signInWithPassword(
                 {
                   email,
@@ -2001,16 +3311,13 @@
     }
 
 
-    /* =====================================================
-       LOGOUT
-    ===================================================== */
-
     async function logout() {
 
       const {
         error
       } =
-        await supabaseClient.auth
+        await supabaseClient
+          .auth
           .signOut();
 
 
@@ -2027,14 +3334,20 @@
 
 
       currentUser = null;
-
       currentProfile = null;
+
 
       updateNavigation();
 
-      updateAccountPage();
+      updateAccountUI();
+
+      updateNotificationBadge(0);
+
+
+      await loadPosts(true);
 
       showPage("home");
+
 
       showToast(
         "Logged out.",
@@ -2045,104 +3358,7 @@
 
 
     /* =====================================================
-       AUTH STATE
-    ===================================================== */
-
-    supabaseClient.auth
-      .onAuthStateChange(
-        async (event) => {
-
-          if (
-            event ===
-            "PASSWORD_RECOVERY"
-          ) {
-
-            setTimeout(
-              () => {
-
-                document
-                  .getElementById(
-                    "updatePasswordOverlay"
-                  )
-                  .classList.add(
-                    "show"
-                  );
-
-              },
-              0
-            );
-
-          }
-
-
-          setTimeout(
-            async () => {
-
-              await loadCurrentUser();
-
-            },
-            0
-          );
-
-        }
-      );
-
-
-    /* =====================================================
-       NAVIGATION UI
-    ===================================================== */
-
-    function updateNavigation() {
-
-      const navRight =
-        document.getElementById(
-          "navRight"
-        );
-
-
-      if (!currentUser) {
-
-        navRight.innerHTML = `
-          <button
-            class="login-btn"
-            onclick="openAuth('login')">
-            Sign in
-          </button>
-        `;
-
-        return;
-
-      }
-
-
-      const email =
-        currentUser.email || "";
-
-
-      navRight.innerHTML = `
-        <span
-          class="nav-email">
-          ${escapeHtml(email)}
-        </span>
-
-        <button
-          class="primary-btn"
-          onclick="showPage('account')">
-          Account
-        </button>
-
-        <button
-          class="logout-btn"
-          onclick="logout()">
-          Logout
-        </button>
-      `;
-
-    }
-
-
-    /* =====================================================
-       FORGOT PASSWORD
+        COMMENTS
     ===================================================== */
 
     function openForgotPassword() {
@@ -2181,26 +3397,21 @@
 
 
       const email =
-        document
-          .getElementById(
-            "resetEmail"
-          )
-          .value
-          .trim();
+        document.getElementById(
+          "resetEmail"
+        ).value.trim();
 
 
       const button =
-        document
-          .getElementById(
-            "resetSubmit"
-          );
+        document.getElementById(
+          "resetSubmit"
+        );
 
 
       const message =
-        document
-          .getElementById(
-            "resetMessage"
-          );
+        document.getElementById(
+          "resetMessage"
+        );
 
 
       button.disabled = true;
@@ -2209,19 +3420,13 @@
         "Sending...";
 
 
-      message.className =
-        "message";
-
-      message.textContent =
-        "Please wait...";
-
-
       try {
 
         const {
           error
         } =
-          await supabaseClient.auth
+          await supabaseClient
+            .auth
             .resetPasswordForEmail(
               email,
               {
@@ -2262,10 +3467,6 @@
     }
 
 
-    /* =====================================================
-       UPDATE PASSWORD
-    ===================================================== */
-
     async function updatePassword(
       event
     ) {
@@ -2281,7 +3482,7 @@
           .value;
 
 
-      const confirmPassword =
+      const confirmation =
         document
           .getElementById(
             "confirmNewPassword"
@@ -2303,33 +3504,14 @@
           );
 
 
-      message.className =
-        "message";
-
-
       if (
         password !==
-        confirmPassword
+        confirmation
       ) {
 
         showMessage(
           message,
           "Passwords do not match.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      if (
-        password.length < 6
-      ) {
-
-        showMessage(
-          message,
-          "Password must be at least 6 characters.",
           "error"
         );
 
@@ -2349,7 +3531,8 @@
         const {
           error
         } =
-          await supabaseClient.auth
+          await supabaseClient
+            .auth
             .updateUser(
               {
                 password
@@ -2370,7 +3553,7 @@
 
 
         setTimeout(
-          async () => {
+          () => {
 
             document
               .getElementById(
@@ -2379,8 +3562,6 @@
               .classList.remove(
                 "show"
               );
-
-            await loadCurrentUser();
 
           },
           1000
@@ -2406,70 +3587,309 @@
     }
 
 
-    /* =====================================================
-       POSTS
-    ===================================================== */
+    function openChangePassword() {
 
-    async function loadPosts() {
+      document
+        .getElementById(
+          "changePasswordOverlay"
+        )
+        .classList.add(
+          "show"
+        );
 
-      const container =
+    }
+
+
+    function closeChangePassword() {
+
+      document
+        .getElementById(
+          "changePasswordOverlay"
+        )
+        .classList.remove(
+          "show"
+        );
+
+    }
+
+
+    async function changePassword(
+      event
+    ) {
+
+      event.preventDefault();
+
+
+      const password =
         document.getElementById(
-          "postsContainer"
+          "accountNewPassword"
+        ).value;
+
+
+      const confirmation =
+        document.getElementById(
+          "accountConfirmPassword"
+        ).value;
+
+
+      const button =
+        document.getElementById(
+          "accountPasswordButton"
         );
 
 
-      container.innerHTML = `
-        <div class="empty-state">
-          Loading posts...
-        </div>
-      `;
-
-
-      const {
-        data: posts,
-        error: postsError
-      } =
-        await supabaseClient
-          .from("posts")
-          .select(
-            "id,user_id,content,created_at"
-          )
-          .order(
-            "created_at",
-            {
-              ascending: false
-            }
-          );
-
-
-      if (postsError) {
-
-        console.error(
-          postsError
+      const message =
+        document.getElementById(
+          "accountPasswordMessage"
         );
 
 
-        container.innerHTML = `
-          <div class="empty-state">
-            Could not load posts.
-          </div>
-        `;
+      if (
+        password !==
+        confirmation
+      ) {
+
+        showMessage(
+          message,
+          "Passwords do not match.",
+          "error"
+        );
 
         return;
 
       }
 
 
-      if (!posts || posts.length === 0) {
+      button.disabled = true;
 
-        container.innerHTML = `
-          <div class="empty-state">
-            No posts yet. Be the first to post.
-          </div>
-        `;
+
+      try {
+
+        const {
+          error
+        } =
+          await supabaseClient
+            .auth
+            .updateUser(
+              {
+                password
+              }
+            );
+
+
+        if (error) {
+          throw error;
+        }
+
+
+        showMessage(
+          message,
+          "Password changed.",
+          "success"
+        );
+
+
+      } catch (error) {
+
+        showMessage(
+          message,
+          error.message,
+          "error"
+        );
+
+      } finally {
+
+        button.disabled = false;
+
+      }
+
+    }
+
+
+    /* =====================================================
+       POSTS
+    ===================================================== */
+
+    async function loadPosts(
+      reset = true
+    ) {
+
+      if (reset) {
+
+        postsOffset = 0;
+
+        morePostsAvailable = true;
+
+        document
+          .getElementById(
+            "postsContainer"
+          )
+          .innerHTML = `
+            <div class="empty-state">
+              Loading posts...
+            </div>
+          `;
+
+      }
+
+
+      const from =
+        postsOffset;
+
+
+      const to =
+        postsOffset +
+        POST_PAGE_SIZE -
+        1;
+
+
+      const {
+        data: posts,
+        error
+      } =
+        await supabaseClient
+          .from("posts")
+          .select(
+            "id,user_id,content,created_at,updated_at"
+          )
+          .order(
+            "created_at",
+            {
+              ascending: false
+            }
+          )
+          .range(
+            from,
+            to
+          );
+
+
+      if (error) {
+
+        document
+          .getElementById(
+            "postsContainer"
+          )
+          .innerHTML = `
+            <div class="empty-state">
+              Could not load posts.
+            </div>
+          `;
+
+        console.error(error);
 
         return;
 
+      }
+
+
+      if (
+        posts.length <
+        POST_PAGE_SIZE
+      ) {
+
+        morePostsAvailable =
+          false;
+
+      }
+
+
+      if (reset) {
+
+        document
+          .getElementById(
+            "postsContainer"
+          )
+          .innerHTML = "";
+
+      }
+
+
+      if (
+        posts.length === 0 &&
+        reset
+      ) {
+
+        document
+          .getElementById(
+            "postsContainer"
+          )
+          .innerHTML = `
+            <div class="empty-state">
+              No posts yet. Be the first to post.
+            </div>
+          `;
+
+      } else {
+
+        const html =
+          await buildPostsHTML(
+            posts
+          );
+
+
+        document
+          .getElementById(
+            "postsContainer"
+          )
+          .insertAdjacentHTML(
+            "beforeend",
+            html
+          );
+
+      }
+
+
+      postsOffset +=
+        posts.length;
+
+
+      document
+        .getElementById(
+          "loadMoreContainer"
+        )
+        .classList.toggle(
+          "hidden",
+          !morePostsAvailable
+        );
+
+    }
+
+
+    async function loadMorePosts() {
+
+      const button =
+        document.getElementById(
+          "loadMoreButton"
+        );
+
+
+      button.disabled = true;
+
+      button.textContent =
+        "Loading...";
+
+
+      await loadPosts(false);
+
+
+      button.disabled = false;
+
+      button.textContent =
+        "Load more";
+
+    }
+
+
+    async function buildPostsHTML(
+      posts
+    ) {
+
+      if (
+        !posts ||
+        posts.length === 0
+      ) {
+        return "";
       }
 
 
@@ -2484,32 +3904,30 @@
         ];
 
 
-      let profiles = [];
+      const postIds =
+        posts.map(
+          post =>
+            post.id
+        );
 
-      if (userIds.length > 0) {
 
-        const {
-          data
-        } =
-          await supabaseClient
-            .from("profiles")
-            .select(
-              "id,username,display_name"
-            )
-            .in(
-              "id",
-              userIds
-            );
-
-        profiles =
-          data || [];
-
-      }
+      const {
+        data: profiles
+      } =
+        await supabaseClient
+          .from("profiles")
+          .select(
+            "id,username,display_name,avatar_url"
+          )
+          .in(
+            "id",
+            userIds
+          );
 
 
       const profileMap =
         new Map(
-          profiles.map(
+          (profiles || []).map(
             profile => [
               profile.id,
               profile
@@ -2518,50 +3936,35 @@
         );
 
 
-      const postIds =
-        posts.map(
-          post =>
-            post.id
-        );
+      const {
+        data: likes
+      } =
+        await supabaseClient
+          .from("post_likes")
+          .select(
+            "post_id,user_id"
+          )
+          .in(
+            "post_id",
+            postIds
+          );
 
 
-      let likes = [];
-
-      if (postIds.length > 0) {
-
-        const {
-          data
-        } =
-          await supabaseClient
-            .from("post_likes")
-            .select(
-              "post_id,user_id"
-            )
-            .in(
-              "post_id",
-              postIds
-            );
-
-        likes =
-          data || [];
-
-      }
-
-
-      const likeCountMap =
+      const likeCounts =
         new Map();
+
 
       const likedByMe =
         new Set();
 
 
-      likes.forEach(
+      (likes || []).forEach(
         like => {
 
-          likeCountMap.set(
+          likeCounts.set(
             like.post_id,
             (
-              likeCountMap.get(
+              likeCounts.get(
                 like.post_id
               ) || 0
             ) + 1
@@ -2584,147 +3987,422 @@
       );
 
 
-      container.innerHTML =
-        "";
+      let bookmarks =
+        [];
 
 
-      posts.forEach(
-        post => {
+      if (currentUser) {
 
-          const profile =
-            profileMap.get(
-              post.user_id
+        const {
+          data
+        } =
+          await supabaseClient
+            .from("bookmarks")
+            .select(
+              "post_id"
+            )
+            .in(
+              "post_id",
+              postIds
             );
 
 
-          const displayName =
-            profile?.display_name ||
-            "User";
+        bookmarks =
+          data || [];
+
+      }
 
 
-          const username =
-            profile?.username ||
-            "user";
+      const bookmarkedIds =
+        new Set(
+          bookmarks.map(
+            item =>
+              item.post_id
+          )
+        );
 
 
-          const likeCount =
-            likeCountMap.get(
-              post.id
-            ) || 0;
+      const {
+        data: mediaRows
+      } =
+        await supabaseClient
+          .from("post_media")
+          .select(
+            "id,post_id,storage_path"
+          )
+          .in(
+            "post_id",
+            postIds
+          )
+          .order(
+            "sort_order",
+            {
+              ascending: true
+            }
+          );
 
 
-          const isLiked =
-            likedByMe.has(
-              post.id
+      const mediaMap =
+        new Map();
+
+
+      (mediaRows || []).forEach(
+        media => {
+
+          if (
+            !mediaMap.has(
+              media.post_id
+            )
+          ) {
+
+            mediaMap.set(
+              media.post_id,
+              []
             );
 
+          }
 
-          const article =
-            document.createElement(
-              "article"
+
+          const {
+            data
+          } =
+            supabaseClient
+              .storage
+              .from("post-media")
+              .getPublicUrl(
+                media.storage_path
+              );
+
+
+          mediaMap
+            .get(
+              media.post_id
+            )
+            .push(
+              data.publicUrl
             );
 
-
-          article.className =
-            "post panel";
-
-
-          article.innerHTML = `
-
-            <div class="post-header">
-
-              <div class="avatar">
-                ${escapeHtml(
-                  getInitial(
-                    displayName
-                  )
-                )}
-              </div>
-
-              <div>
-
-                <div class="username">
-                  ${escapeHtml(
-                    displayName
-                  )}
-                </div>
-
-                <div class="post-time">
-                  @${escapeHtml(
-                    username
-                  )}
-                  ·
-                  ${escapeHtml(
-                    formatDate(
-                      post.created_at
-                    )
-                  )}
-                </div>
-
-              </div>
-
-            </div>
+        }
+      );
 
 
-            <div class="post-text">
-              ${escapeHtml(
-                post.content
-              )}
-            </div>
+      let commentCounts =
+        new Map();
 
 
-            <div class="post-actions">
-
-              <button
-                class="action-btn ${
-                  isLiked
-                    ? "liked"
-                    : ""
-                }"
-                data-post-id="${post.id}"
-                onclick="toggleLike(
-                  ${post.id},
-                  this
-                )">
-
-                ♥ ${likeCount}
-
-              </button>
-
-              ${
-                currentUser &&
-                currentUser.id ===
-                  post.user_id
-                  ? `
-                    <button
-                      class="action-btn"
-                      onclick="deletePost(
-                        ${post.id}
-                      )">
-                      Delete
-                    </button>
-                  `
-                  : ""
-              }
-
-            </div>
-
-          `;
+      const {
+        data: commentRows
+      } =
+        await supabaseClient
+          .from("comments")
+          .select(
+            "post_id"
+          )
+          .in(
+            "post_id",
+            postIds
+          );
 
 
-          container.appendChild(
-            article
+      (commentRows || []).forEach(
+        comment => {
+
+          commentCounts.set(
+            comment.post_id,
+            (
+              commentCounts.get(
+                comment.post_id
+              ) || 0
+            ) + 1
           );
 
         }
       );
 
+
+      return posts
+        .map(
+          post => {
+
+            const profile =
+              profileMap.get(
+                post.user_id
+              );
+
+
+            const name =
+              profile?.display_name ||
+              "User";
+
+
+            const username =
+              profile?.username ||
+              "user";
+
+
+            const likesCount =
+              likeCounts.get(
+                post.id
+              ) || 0;
+
+
+            const commentsCount =
+              commentCounts.get(
+                post.id
+              ) || 0;
+
+
+            const isLiked =
+              likedByMe.has(
+                post.id
+              );
+
+
+            const isBookmarked =
+              bookmarkedIds.has(
+                post.id
+              );
+
+
+            const media =
+              mediaMap.get(
+                post.id
+              ) || [];
+
+
+            const isOwner =
+              currentUser &&
+              currentUser.id ===
+                post.user_id;
+
+
+            return `
+
+              <article
+                class="post panel"
+                data-post-id="${post.id}">
+
+                <div class="post-header">
+
+                  <div class="avatar">
+
+                    ${
+                      profile?.avatar_url
+                        ? `
+                          <img
+                            src="${escapeHtml(
+                              profile.avatar_url
+                            )}"
+                            alt="Avatar">
+                        `
+                        : escapeHtml(
+                            getInitial(
+                              name
+                            )
+                          )
+                    }
+
+                  </div>
+
+
+                  <div style="min-width:0;">
+
+                    <div
+                      class="post-author"
+                      onclick="openProfileModal(
+                        '${post.user_id}'
+                      )">
+
+                      ${escapeHtml(
+                        name
+                      )}
+
+                    </div>
+
+
+                    <div class="post-meta">
+
+                      @${escapeHtml(
+                        username
+                      )}
+
+                      ·
+
+                      ${escapeHtml(
+                        formatDate(
+                          post.created_at
+                        )
+                      )}
+
+                    </div>
+
+                  </div>
+
+
+                  ${
+                    isOwner
+                      ? `
+                        <div class="post-menu">
+
+                          <button
+                            class="action-btn"
+                            onclick="editPost(
+                              ${post.id},
+                              ${JSON.stringify(
+                                post.content
+                              )}
+                            )">
+                            Edit
+                          </button>
+
+                          <button
+                            class="action-btn"
+                            onclick="deletePost(
+                              ${post.id}
+                            )">
+                            Delete
+                          </button>
+
+                        </div>
+                      `
+                      : ""
+                  }
+
+                </div>
+
+
+                <div class="post-content">
+
+                  ${escapeHtml(
+                    post.content
+                  )}
+
+                </div>
+
+
+                ${
+                  media.length
+                    ? `
+                      <div class="post-media">
+
+                        ${media
+                          .map(
+                            url =>
+                              `
+                                <img
+                                  src="${escapeHtml(
+                                    url
+                                  )}"
+                                  alt="Post image">
+                              `
+                          )
+                          .join("")}
+
+                      </div>
+                    `
+                    : ""
+                }
+
+
+                <div class="post-actions">
+
+                  <button
+                    class="action-btn ${
+                      isLiked
+                        ? "active"
+                        : ""
+                    }"
+                    onclick="togglePostLike(
+                      ${post.id},
+                      this
+                    )">
+
+                    ♥ ${likesCount}
+
+                  </button>
+
+
+                  <button
+                    class="action-btn"
+                    onclick="toggleComments(
+                      ${post.id},
+                      this
+                    )">
+
+                    💬 ${commentsCount}
+
+                  </button>
+
+
+                  <button
+                    class="action-btn ${
+                      isBookmarked
+                        ? "active"
+                        : ""
+                    }"
+                    onclick="toggleBookmark(
+                      ${post.id},
+                      this
+                    )">
+
+                    🔖 ${
+                      isBookmarked
+                        ? "Saved"
+                        : "Save"
+                    }
+
+                  </button>
+
+
+                  <button
+                    class="action-btn"
+                    onclick="copyPostLink(
+                      ${post.id}
+                    )">
+
+                    ↗ Share
+
+                  </button>
+
+
+                  ${
+                    !isOwner
+                      ? `
+                        <button
+                          class="action-btn"
+                          onclick="openReport(
+                            'post',
+                            '${post.id}'
+                          )">
+                          Report
+                        </button>
+                      `
+                      : ""
+                  }
+
+                </div>
+
+
+                <div
+                  id="comments-${post.id}"
+                  class="comments-area hidden">
+
+                  <div class="empty-state">
+                    Loading comments...
+                  </div>
+
+                </div>
+
+              </article>
+
+            `;
+
+          }
+        )
+        .join("");
+
     }
 
-
-    /* =====================================================
-       CREATE POST
-    ===================================================== */
 
     async function createPost() {
 
@@ -2748,6 +4426,12 @@
         );
 
 
+      const imageInput =
+        document.getElementById(
+          "postImageInput"
+        );
+
+
       const button =
         document.getElementById(
           "postButton"
@@ -2758,10 +4442,34 @@
         input.value.trim();
 
 
-      if (!content) {
+      const file =
+        imageInput.files?.[0] ||
+        null;
+
+
+      if (
+        !content &&
+        !file
+      ) {
 
         showToast(
-          "Write something first.",
+          "Write something or add an image.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      if (
+        file &&
+        file.size >
+        5 * 1024 * 1024
+      ) {
+
+        showToast(
+          "Post image must be 5 MB or smaller.",
           "error"
         );
 
@@ -2776,10 +4484,16 @@
         "Posting...";
 
 
+      let uploadedPath =
+        null;
+
+
       try {
 
         const {
-          error
+          data: post,
+          error:
+            postError
         } =
           await supabaseClient
             .from("posts")
@@ -2789,19 +4503,113 @@
                   currentUser.id,
 
                 content:
-                  content
+                  content ||
+                  " "
               }
+            )
+            .select()
+            .single();
+
+
+        if (postError) {
+          throw postError;
+        }
+
+
+        if (file) {
+
+          const extension =
+            getFileExtension(
+              file.name
             );
 
 
-        if (error) {
-          throw error;
+          uploadedPath =
+            currentUser.id +
+            "/" +
+            crypto.randomUUID() +
+            extension;
+
+
+          const {
+            error:
+              uploadError
+          } =
+            await supabaseClient
+              .storage
+              .from("post-media")
+              .upload(
+                uploadedPath,
+                file,
+                {
+                  contentType:
+                    file.type,
+                  upsert:
+                    false
+                }
+              );
+
+
+          if (uploadError) {
+            throw uploadError;
+          }
+
+
+          const {
+            error:
+              mediaError
+          } =
+            await supabaseClient
+              .from("post_media")
+              .insert(
+                {
+                  post_id:
+                    post.id,
+
+                  user_id:
+                    currentUser.id,
+
+                  storage_path:
+                    uploadedPath,
+
+                  media_type:
+                    "image",
+
+                  sort_order:
+                    0
+                }
+              );
+
+
+          if (mediaError) {
+            throw mediaError;
+          }
+
         }
 
 
         input.value = "";
 
-        await loadPosts();
+        imageInput.value = "";
+
+        document
+          .getElementById(
+            "postImagePreview"
+          )
+          .classList.add(
+            "hidden"
+          );
+
+
+        document
+          .getElementById(
+            "postImageName"
+          )
+          .textContent = "";
+
+
+        await loadPosts(true);
+
 
         showToast(
           "Post published.",
@@ -2809,6 +4617,22 @@
         );
 
       } catch (error) {
+
+        if (
+          uploadedPath
+        ) {
+
+          await supabaseClient
+            .storage
+            .from("post-media")
+            .remove(
+              [
+                uploadedPath
+              ]
+            );
+
+        }
+
 
         showToast(
           error.message,
@@ -2827,12 +4651,9 @@
     }
 
 
-    /* =====================================================
-       DELETE POST
-    ===================================================== */
-
-    async function deletePost(
-      postId
+    async function editPost(
+      postId,
+      currentContent
     ) {
 
       if (!currentUser) {
@@ -2840,14 +4661,34 @@
       }
 
 
-      const confirmed =
-        confirm(
-          "Delete this post?"
+      const newContent =
+        prompt(
+          "Edit your post:",
+          currentContent
         );
 
 
-      if (!confirmed) {
+      if (
+        newContent ===
+        null
+      ) {
         return;
+      }
+
+
+      const content =
+        newContent.trim();
+
+
+      if (!content) {
+
+        showToast(
+          "Post cannot be empty.",
+          "error"
+        );
+
+        return;
+
       }
 
 
@@ -2856,10 +4697,18 @@
       } =
         await supabaseClient
           .from("posts")
-          .delete()
+          .update(
+            {
+              content
+            }
+          )
           .eq(
             "id",
             postId
+          )
+          .eq(
+            "user_id",
+            currentUser.id
           );
 
 
@@ -2875,7 +4724,63 @@
       }
 
 
-      await loadPosts();
+      await loadPosts(true);
+
+      showToast(
+        "Post updated.",
+        "success"
+      );
+
+    }
+
+
+    async function deletePost(
+      postId
+    ) {
+
+      if (!currentUser) {
+        return;
+      }
+
+
+      if (
+        !confirm(
+          "Delete this post?"
+        )
+      ) {
+        return;
+      }
+
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from("posts")
+          .delete()
+          .eq(
+            "id",
+            postId
+          )
+          .eq(
+            "user_id",
+            currentUser.id
+          );
+
+
+      if (error) {
+
+        showToast(
+          error.message,
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      await loadPosts(true);
 
       showToast(
         "Post deleted.",
@@ -2886,10 +4791,10 @@
 
 
     /* =====================================================
-       LIKE
+       POST LIKE
     ===================================================== */
 
-    async function toggleLike(
+    async function togglePostLike(
       postId,
       button
     ) {
@@ -2897,12 +4802,6 @@
       if (!currentUser) {
 
         openAuth("login");
-
-        showToast(
-          "Sign in to like posts.",
-          "error"
-        );
-
         return;
 
       }
@@ -2987,7 +4886,7 @@
         }
 
 
-        await loadPosts();
+        await loadPosts(true);
 
       } catch (error) {
 
@@ -3006,53 +4905,2917 @@
 
 
     /* =====================================================
-       EXPLORE SEARCH
+       BOOKMARK
     ===================================================== */
 
-    function filterExplore() {
+    async function toggleBookmark(
+      postId,
+      button
+    ) {
 
-      const query =
-        document
-          .getElementById(
-            "exploreSearch"
-          )
-          .value
-          .toLowerCase()
-          .trim();
+      if (!currentUser) {
 
+        openAuth("login");
+        return;
 
-      document
-        .querySelectorAll(
-          ".explore-card"
-        )
-        .forEach(
-          card => {
-
-            const searchable =
-              (
-                card.dataset.search ||
-                ""
-              )
-              .toLowerCase();
+      }
 
 
-            card.style.display =
-              !query ||
-              searchable.includes(
-                query
-              )
-                ? ""
-                : "none";
+      button.disabled = true;
 
+
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .from("bookmarks")
+            .select(
+              "post_id"
+            )
+            .eq(
+              "post_id",
+              postId
+            )
+            .eq(
+              "user_id",
+              currentUser.id
+            )
+            .maybeSingle();
+
+
+        if (error) {
+          throw error;
+        }
+
+
+        if (data) {
+
+          await supabaseClient
+            .from("bookmarks")
+            .delete()
+            .eq(
+              "post_id",
+              postId
+            )
+            .eq(
+              "user_id",
+              currentUser.id
+            );
+
+        } else {
+
+          const {
+            error:
+              insertError
+          } =
+            await supabaseClient
+              .from("bookmarks")
+              .insert(
+                {
+                  post_id:
+                    postId,
+
+                  user_id:
+                    currentUser.id
+                }
+              );
+
+
+          if (insertError) {
+            throw insertError;
           }
+
+        }
+
+
+        await loadPosts(true);
+
+        showToast(
+          data
+            ? "Removed from bookmarks."
+            : "Saved to bookmarks.",
+          "success"
         );
+
+      } catch (error) {
+
+        showToast(
+          error.message,
+          "error"
+        );
+
+      } finally {
+
+        button.disabled = false;
+
+      }
+
+    }
+
+
+    async function loadBookmarks() {
+
+      const container =
+        document.getElementById(
+          "bookmarksContainer"
+        );
+
+
+      if (!currentUser) {
+
+        container.innerHTML = `
+          <div class="empty-state">
+            Sign in to see your saved posts.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      const {
+        data: bookmarks,
+        error
+      } =
+        await supabaseClient
+          .from("bookmarks")
+          .select(
+            "post_id,created_at"
+          )
+          .eq(
+            "user_id",
+            currentUser.id
+          )
+          .order(
+            "created_at",
+            {
+              ascending: false
+            }
+          );
+
+
+      if (error) {
+
+        container.innerHTML = `
+          <div class="empty-state">
+            Could not load bookmarks.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      if (
+        !bookmarks ||
+        bookmarks.length === 0
+      ) {
+
+        container.innerHTML = `
+          <div class="empty-state">
+            You haven't saved any posts yet.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      const ids =
+        bookmarks.map(
+          item =>
+            item.post_id
+        );
+
+
+      const {
+        data: posts
+      } =
+        await supabaseClient
+          .from("posts")
+          .select(
+            "id,user_id,content,created_at"
+          )
+          .in(
+            "id",
+            ids
+          )
+          .order(
+            "created_at",
+            {
+              ascending: false
+            }
+          );
+
+
+      const html =
+        await buildPostsHTML(
+          posts || []
+        );
+
+
+      container.innerHTML =
+        html ||
+        `
+          <div class="empty-state">
+            Saved posts are no longer available.
+          </div>
+        `;
 
     }
 
 
     /* =====================================================
-       HELPERS
+       COMMENTS
     ===================================================== */
+
+    async function toggleComments(
+      postId,
+      button
+    ) {
+
+      const area =
+        document.getElementById(
+          "comments-" +
+          postId
+        );
+
+
+      if (
+        !area.classList.contains(
+          "hidden"
+        )
+      ) {
+
+        area.classList.add(
+          "hidden"
+        );
+
+        return;
+
+      }
+
+
+      area.classList.remove(
+        "hidden"
+      );
+
+
+      await loadComments(
+        postId
+      );
+
+    }
+
+
+    async function loadComments(
+      postId
+    ) {
+
+      const area =
+        document.getElementById(
+          "comments-" +
+          postId
+        );
+
+
+      if (!area) {
+        return;
+      }
+
+
+      area.innerHTML = `
+        <div class="empty-state">
+          Loading comments...
+        </div>
+      `;
+
+
+      const {
+        data: comments,
+        error
+      } =
+        await supabaseClient
+          .from("comments")
+          .select(
+            "id,post_id,user_id,content,created_at"
+          )
+          .eq(
+            "post_id",
+            postId
+          )
+          .order(
+            "created_at",
+            {
+              ascending: true
+            }
+          );
+
+
+      if (error) {
+
+        area.innerHTML = `
+          <div class="empty-state">
+            Could not load comments.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      const ids =
+        [
+          ...new Set(
+            (comments || [])
+              .map(
+                comment =>
+                  comment.user_id
+              )
+          )
+        ];
+
+
+      let profiles =
+        [];
+
+
+      if (ids.length) {
+
+        const {
+          data
+        } =
+          await supabaseClient
+            .from("profiles")
+            .select(
+              "id,display_name,username,avatar_url"
+            )
+            .in(
+              "id",
+              ids
+            );
+
+
+        profiles =
+          data || [];
+
+      }
+
+
+      const profileMap =
+        new Map(
+          profiles.map(
+            profile => [
+              profile.id,
+              profile
+            ]
+          )
+        );
+
+
+      const commentIds =
+        (comments || [])
+          .map(
+            comment =>
+              comment.id
+          );
+
+
+      let commentLikes =
+        [];
+
+
+      if (commentIds.length) {
+
+        const {
+          data
+        } =
+          await supabaseClient
+            .from("comment_likes")
+            .select(
+              "comment_id,user_id"
+            )
+            .in(
+              "comment_id",
+              commentIds
+            );
+
+
+        commentLikes =
+          data || [];
+
+      }
+
+
+      const likeCounts =
+        new Map();
+
+
+      const likedByMe =
+        new Set();
+
+
+      commentLikes.forEach(
+        like => {
+
+          likeCounts.set(
+            like.comment_id,
+            (
+              likeCounts.get(
+                like.comment_id
+              ) || 0
+            ) + 1
+          );
+
+
+          if (
+            currentUser &&
+            like.user_id ===
+              currentUser.id
+          ) {
+
+            likedByMe.add(
+              like.comment_id
+            );
+
+          }
+
+        }
+      );
+
+
+      area.innerHTML = `
+
+        ${
+          currentUser
+            ? `
+              <form
+                class="comment-form"
+                onsubmit="createComment(
+                  event,
+                  ${postId}
+                )">
+
+                <input
+                  id="commentInput-${postId}"
+                  class="input"
+                  maxlength="2000"
+                  placeholder="Write a comment...">
+
+                <button
+                  class="btn btn-primary">
+                  Send
+                </button>
+
+              </form>
+            `
+            : `
+              <div
+                class="muted"
+                style="margin-bottom:12px;">
+                Sign in to comment.
+              </div>
+            `
+        }
+
+
+        <div>
+
+          ${
+            !comments ||
+            comments.length === 0
+              ? `
+                <div class="empty-state">
+                  No comments yet.
+                </div>
+              `
+              : comments
+                  .map(
+                    comment => {
+
+                      const profile =
+                        profileMap.get(
+                          comment.user_id
+                        );
+
+
+                      const name =
+                        profile?.display_name ||
+                        "User";
+
+
+                      const count =
+                        likeCounts.get(
+                          comment.id
+                        ) || 0;
+
+
+                      const liked =
+                        likedByMe.has(
+                          comment.id
+                        );
+
+
+                      return `
+
+                        <div class="comment">
+
+                          <div class="avatar">
+
+                            ${
+                              profile?.avatar_url
+                                ? `
+                                  <img
+                                    src="${escapeHtml(
+                                      profile.avatar_url
+                                    )}"
+                                    alt="Avatar">
+                                `
+                                : escapeHtml(
+                                    getInitial(
+                                      name
+                                    )
+                                  )
+                            }
+
+                          </div>
+
+
+                          <div class="comment-body">
+
+                            <div class="comment-top">
+
+                              <span class="comment-author">
+                                ${escapeHtml(
+                                  name
+                                )}
+                              </span>
+
+                              <span class="comment-time">
+                                ${escapeHtml(
+                                  formatDate(
+                                    comment.created_at
+                                  )
+                                )}
+                              </span>
+
+                            </div>
+
+
+                            <div class="comment-content">
+                              ${escapeHtml(
+                                comment.content
+                              )}
+                            </div>
+
+
+                            <div class="comment-actions">
+
+                              <button
+                                class="comment-action"
+                                onclick="toggleCommentLike(
+                                  ${comment.id},
+                                  ${postId}
+                                )">
+
+                                ${liked ? "♥" : "♡"}
+                                ${count}
+
+                              </button>
+
+
+                              ${
+                                currentUser &&
+                                currentUser.id ===
+                                  comment.user_id
+                                  ? `
+                                    <button
+                                      class="comment-action"
+                                      onclick="deleteComment(
+                                        ${comment.id},
+                                        ${postId}
+                                      )">
+                                      Delete
+                                    </button>
+                                  `
+                                  : ""
+                              }
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                      `;
+
+                    }
+                  )
+                  .join("")
+          }
+
+        </div>
+
+      `;
+
+    }
+
+
+    async function createComment(
+      event,
+      postId
+    ) {
+
+      event.preventDefault();
+
+
+      if (!currentUser) {
+
+        openAuth("login");
+        return;
+
+      }
+
+
+      const input =
+        document.getElementById(
+          "commentInput-" +
+          postId
+        );
+
+
+      const content =
+        input.value.trim();
+
+
+      if (!content) {
+        return;
+      }
+
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from("comments")
+          .insert(
+            {
+              post_id:
+                postId,
+
+              user_id:
+                currentUser.id,
+
+              content:
+                content
+            }
+          );
+
+
+      if (error) {
+
+        showToast(
+          error.message,
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      input.value = "";
+
+      await loadComments(
+        postId
+      );
+
+      await loadPosts(true);
+
+    }
+
+
+    async function toggleCommentLike(
+      commentId,
+      postId
+    ) {
+
+      if (!currentUser) {
+
+        openAuth("login");
+        return;
+
+      }
+
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("comment_likes")
+          .select(
+            "comment_id"
+          )
+          .eq(
+            "comment_id",
+            commentId
+          )
+          .eq(
+            "user_id",
+            currentUser.id
+          )
+          .maybeSingle();
+
+
+      if (error) {
+
+        showToast(
+          error.message,
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      if (data) {
+
+        await supabaseClient
+          .from("comment_likes")
+          .delete()
+          .eq(
+            "comment_id",
+            commentId
+          )
+          .eq(
+            "user_id",
+            currentUser.id
+          );
+
+      } else {
+
+        const {
+          error:
+            insertError
+        } =
+          await supabaseClient
+            .from("comment_likes")
+            .insert(
+              {
+                comment_id:
+                  commentId,
+
+                user_id:
+                  currentUser.id
+              }
+            );
+
+
+        if (insertError) {
+
+          showToast(
+            insertError.message,
+            "error"
+          );
+
+          return;
+
+        }
+
+      }
+
+
+      await loadComments(
+        postId
+      );
+
+    }
+
+
+    async function deleteComment(
+      commentId,
+      postId
+    ) {
+
+      if (!currentUser) {
+        return;
+      }
+
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from("comments")
+          .delete()
+          .eq(
+            "id",
+            commentId
+          )
+          .eq(
+            "user_id",
+            currentUser.id
+          );
+
+
+      if (error) {
+
+        showToast(
+          error.message,
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      await loadComments(
+        postId
+      );
+
+    }
+
+
+    /* =====================================================
+       EXPLORE / PEOPLE
+    ===================================================== */
+
+    let searchTimer = null;
+
+
+    async function searchExplore() {
+
+      clearTimeout(
+        searchTimer
+      );
+
+
+      searchTimer =
+        setTimeout(
+          async () => {
+
+            const input =
+              document
+                .getElementById(
+                  "exploreSearch"
+                );
+
+
+            const query =
+              input.value
+                .trim()
+                .toLowerCase();
+
+
+            document
+              .querySelectorAll(
+                ".topic-card"
+              )
+              .forEach(
+                card => {
+
+                  const searchable =
+                    (
+                      card.dataset.search ||
+                      ""
+                    ).toLowerCase();
+
+
+                  card.style.display =
+                    !query ||
+                    searchable.includes(
+                      query
+                    )
+                      ? ""
+                      : "none";
+
+                }
+              );
+
+
+            await searchPeople(
+              query
+            );
+
+          },
+          250
+        );
+
+    }
+
+
+    async function searchPeople(
+      query
+    ) {
+
+      const container =
+        document.getElementById(
+          "peopleContainer"
+        );
+
+
+      if (!query) {
+
+        container.innerHTML = `
+          <div class="empty-state">
+            Search for a username or name.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("profiles")
+          .select(
+            "id,username,display_name,bio,avatar_url"
+          )
+          .or(
+            "username.ilike.%" +
+            escapeFilter(
+              query
+            ) +
+            "%,display_name.ilike.%" +
+            escapeFilter(
+              query
+            ) +
+            "%"
+          )
+          .limit(20);
+
+
+      if (error) {
+
+        container.innerHTML = `
+          <div class="empty-state">
+            Search failed.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      let people =
+        data || [];
+
+
+      if (currentUser) {
+
+        people =
+          people.filter(
+            person =>
+              person.id !==
+              currentUser.id
+          );
+
+      }
+
+
+      if (people.length === 0) {
+
+        container.innerHTML = `
+          <div class="empty-state">
+            No users found.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      const ids =
+        people.map(
+          person =>
+            person.id
+        );
+
+
+      let followingIds =
+        new Set();
+
+
+      if (currentUser) {
+
+        const {
+          data: following
+        } =
+          await supabaseClient
+            .from("follows")
+            .select(
+              "following_id"
+            )
+            .eq(
+              "follower_id",
+              currentUser.id
+            )
+            .in(
+              "following_id",
+              ids
+            );
+
+
+        followingIds =
+          new Set(
+            (
+              following ||
+              []
+            ).map(
+              item =>
+                item.following_id
+            )
+          );
+
+      }
+
+
+      container.innerHTML =
+        people
+          .map(
+            person => {
+
+              const following =
+                followingIds.has(
+                  person.id
+                );
+
+
+              return `
+
+                <div class="person-card panel">
+
+                  <div class="person-left">
+
+                    <div class="avatar">
+
+                      ${
+                        person.avatar_url
+                          ? `
+                            <img
+                              src="${escapeHtml(
+                                person.avatar_url
+                              )}"
+                              alt="Avatar">
+                          `
+                          : escapeHtml(
+                              getInitial(
+                                person.display_name
+                              )
+                            )
+                      }
+
+                    </div>
+
+
+                    <div class="person-info">
+
+                      <div
+                        class="person-name"
+                        onclick="openProfileModal(
+                          '${person.id}'
+                        )"
+                        style="cursor:pointer;">
+
+                        ${escapeHtml(
+                          person.display_name
+                        )}
+
+                      </div>
+
+
+                      <div class="person-username">
+                        @${escapeHtml(
+                          person.username ||
+                            "user"
+                        )}
+                      </div>
+
+
+                      ${
+                        person.bio
+                          ? `
+                            <div class="person-bio">
+                              ${escapeHtml(
+                                person.bio
+                              )}
+                            </div>
+                          `
+                          : ""
+                      }
+
+                    </div>
+
+                  </div>
+
+
+                  <div>
+
+                    ${
+                      currentUser
+                        ? `
+                          <button
+                            class="btn ${
+                              following
+                                ? "btn-dark"
+                                : "btn-primary"
+                            } btn-small"
+                            onclick="toggleFollow(
+                              '${person.id}'
+                            )">
+
+                            ${
+                              following
+                                ? "Following"
+                                : "Follow"
+                            }
+
+                          </button>
+                        `
+                        : `
+                          <button
+                            class="btn btn-primary btn-small"
+                            onclick="openAuth('login')">
+                            Follow
+                          </button>
+                        `
+                    }
+
+                  </div>
+
+                </div>
+
+              `;
+
+            }
+          )
+          .join("");
+
+    }
+
+
+    async function toggleFollow(
+      userId
+    ) {
+
+      if (!currentUser) {
+
+        openAuth("login");
+        return;
+
+      }
+
+
+      if (
+        currentUser.id ===
+        userId
+      ) {
+
+        return;
+
+      }
+
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("follows")
+          .select(
+            "follower_id"
+          )
+          .eq(
+            "follower_id",
+            currentUser.id
+          )
+          .eq(
+            "following_id",
+            userId
+          )
+          .maybeSingle();
+
+
+      if (error) {
+
+        showToast(
+          error.message,
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      if (data) {
+
+        const {
+          error:
+            deleteError
+        } =
+          await supabaseClient
+            .from("follows")
+            .delete()
+            .eq(
+              "follower_id",
+              currentUser.id
+            )
+            .eq(
+              "following_id",
+              userId
+            );
+
+
+        if (deleteError) {
+
+          showToast(
+            deleteError.message,
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        showToast(
+          "Unfollowed.",
+          "success"
+        );
+
+      } else {
+
+        const {
+          error:
+            insertError
+        } =
+          await supabaseClient
+            .from("follows")
+            .insert(
+              {
+                follower_id:
+                  currentUser.id,
+
+                following_id:
+                  userId
+              }
+            );
+
+
+        if (insertError) {
+
+          showToast(
+            insertError.message,
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        showToast(
+          "Following.",
+          "success"
+        );
+
+      }
+
+
+      await searchPeople(
+        document
+          .getElementById(
+            "exploreSearch"
+          )
+          .value
+          .trim()
+          .toLowerCase()
+      );
+
+
+      await loadNotificationBadge();
+
+    }
+
+
+    /* =====================================================
+       PROFILE MODAL
+    ===================================================== */
+
+    async function openProfileModal(
+      userId
+    ) {
+
+      currentProfileViewId =
+        userId;
+
+
+      const overlay =
+        document.getElementById(
+          "profileModalOverlay"
+        );
+
+
+      const content =
+        document.getElementById(
+          "profileModalContent"
+        );
+
+
+      overlay.classList.add(
+        "show"
+      );
+
+
+      content.innerHTML = `
+        <div class="empty-state">
+          Loading profile...
+        </div>
+      `;
+
+
+      const {
+        data: profile,
+        error
+      } =
+        await supabaseClient
+          .from("profiles")
+          .select("*")
+          .eq(
+            "id",
+            userId
+          )
+          .maybeSingle();
+
+
+      if (
+        error ||
+        !profile
+      ) {
+
+        content.innerHTML = `
+          <div class="empty-state">
+            Profile not found.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      const followers =
+        await supabaseClient
+          .from("follows")
+          .select(
+            "follower_id",
+            {
+              count: "exact",
+              head: true
+            }
+          )
+          .eq(
+            "following_id",
+            userId
+          );
+
+
+      const following =
+        await supabaseClient
+          .from("follows")
+          .select(
+            "following_id",
+            {
+              count: "exact",
+              head: true
+            }
+          )
+          .eq(
+            "follower_id",
+            userId
+          );
+
+
+      let isFollowing =
+        false;
+
+
+      let isBlocked =
+        false;
+
+
+      if (
+        currentUser &&
+        currentUser.id !==
+          userId
+      ) {
+
+        const {
+          data: follow
+        } =
+          await supabaseClient
+            .from("follows")
+            .select(
+              "follower_id"
+            )
+            .eq(
+              "follower_id",
+              currentUser.id
+            )
+            .eq(
+              "following_id",
+              userId
+            )
+            .maybeSingle();
+
+
+        isFollowing =
+          !!follow;
+
+
+        const {
+          data: block
+        } =
+          await supabaseClient
+            .from("blocks")
+            .select(
+              "blocked_id"
+            )
+            .eq(
+              "blocker_id",
+              currentUser.id
+            )
+            .eq(
+              "blocked_id",
+              userId
+            )
+            .maybeSingle();
+
+
+        isBlocked =
+          !!block;
+
+      }
+
+
+      const name =
+        profile.display_name ||
+        "User";
+
+
+      content.innerHTML = `
+
+        <div>
+
+          <div class="profile-top">
+
+            <div class="avatar avatar-large">
+
+              ${
+                profile.avatar_url
+                  ? `
+                    <img
+                      src="${escapeHtml(
+                        profile.avatar_url
+                      )}"
+                      alt="Avatar">
+                  `
+                  : escapeHtml(
+                      getInitial(
+                        name
+                      )
+                    )
+              }
+
+            </div>
+
+
+            <div>
+
+              <div class="profile-name">
+                ${escapeHtml(
+                  name
+                )}
+              </div>
+
+
+              <div class="profile-username">
+                @${escapeHtml(
+                  profile.username ||
+                    "user"
+                )}
+              </div>
+
+            </div>
+
+          </div>
+
+
+          ${
+            profile.bio
+              ? `
+                <div class="profile-bio">
+                  ${escapeHtml(
+                    profile.bio
+                  )}
+                </div>
+              `
+              : ""
+          }
+
+
+          <div class="profile-stats">
+
+            <div>
+
+              <div class="stat-number">
+                ${followers.count || 0}
+              </div>
+
+              <div class="stat-label">
+                Followers
+              </div>
+
+            </div>
+
+
+            <div>
+
+              <div class="stat-number">
+                ${following.count || 0}
+              </div>
+
+              <div class="stat-label">
+                Following
+              </div>
+
+            </div>
+
+          </div>
+
+
+          ${
+            currentUser &&
+            currentUser.id !==
+              userId
+              ? `
+
+                <div class="profile-actions">
+
+                  <button
+                    class="btn ${
+                      isFollowing
+                        ? "btn-dark"
+                        : "btn-primary"
+                    }"
+                    onclick="toggleFollowFromProfile(
+                      '${userId}'
+                    )">
+
+                    ${
+                      isFollowing
+                        ? "Following"
+                        : "Follow"
+                    }
+
+                  </button>
+
+
+                  ${
+                    isBlocked
+                      ? `
+                        <button
+                          class="btn btn-dark"
+                          onclick="toggleBlock(
+                            '${userId}'
+                          )">
+                          Unblock
+                        </button>
+                      `
+                      : `
+                        <button
+                          class="btn btn-dark"
+                          onclick="startMessageWithUser(
+                            '${userId}'
+                          )">
+                          Message
+                        </button>
+
+                        <button
+                          class="btn btn-dark"
+                          onclick="toggleBlock(
+                            '${userId}'
+                          )">
+                          Block
+                        </button>
+                      `
+                  }
+
+
+                  <button
+                    class="btn btn-danger"
+                    onclick="openReport(
+                      'user',
+                      '${userId}'
+                    )">
+
+                    Report
+
+                  </button>
+
+                </div>
+
+              `
+              : ""
+          }
+
+
+          <div
+            style="margin-top:25px; padding-top:20px; border-top:1px solid var(--border);">
+
+            <h3>
+              Posts
+            </h3>
+
+
+            <div
+              id="profilePosts"
+              style="margin-top:15px;">
+
+              <div class="empty-state">
+                Loading posts...
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      `;
+
+
+      await loadProfilePosts(
+        userId
+      );
+
+    }
+
+
+    async function toggleFollowFromProfile(
+      userId
+    ) {
+
+      await toggleFollow(
+        userId
+      );
+
+
+      await openProfileModal(
+        userId
+      );
+
+    }
+
+
+    async function loadProfilePosts(
+      userId
+    ) {
+
+      const {
+        data: posts
+      } =
+        await supabaseClient
+          .from("posts")
+          .select(
+            "id,user_id,content,created_at"
+          )
+          .eq(
+            "user_id",
+            userId
+          )
+          .order(
+            "created_at",
+            {
+              ascending: false
+            }
+          )
+          .limit(10);
+
+
+      const container =
+        document.getElementById(
+          "profilePosts"
+        );
+
+
+      if (
+        !posts ||
+        posts.length === 0
+      ) {
+
+        container.innerHTML = `
+          <div class="empty-state">
+            No posts yet.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      container.innerHTML =
+        await buildPostsHTML(
+          posts
+        );
+
+    }
+
+
+    function closeProfileModal() {
+
+      document
+        .getElementById(
+          "profileModalOverlay"
+        )
+        .classList.remove(
+          "show"
+        );
+
+      currentProfileViewId =
+        null;
+
+    }
+
+
+    /* =====================================================
+       BLOCK
+    ===================================================== */
+
+    async function toggleBlock(
+      userId
+    ) {
+
+      if (!currentUser) {
+        return;
+      }
+
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("blocks")
+          .select(
+            "blocked_id"
+          )
+          .eq(
+            "blocker_id",
+            currentUser.id
+          )
+          .eq(
+            "blocked_id",
+            userId
+          )
+          .maybeSingle();
+
+
+      if (error) {
+
+        showToast(
+          error.message,
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      if (data) {
+
+        await supabaseClient
+          .from("blocks")
+          .delete()
+          .eq(
+            "blocker_id",
+            currentUser.id
+          )
+          .eq(
+            "blocked_id",
+            userId
+          );
+
+
+        showToast(
+          "User unblocked.",
+          "success"
+        );
+
+      } else {
+
+        await supabaseClient
+          .from("blocks")
+          .insert(
+            {
+              blocker_id:
+                currentUser.id,
+
+              blocked_id:
+                userId
+            }
+          );
+
+
+        await supabaseClient
+          .from("follows")
+          .delete()
+          .or(
+            `and(follower_id.eq.${currentUser.id},following_id.eq.${userId}),and(follower_id.eq.${userId},following_id.eq.${currentUser.id})`
+          );
+
+
+        showToast(
+          "User blocked.",
+          "success"
+        );
+
+      }
+
+
+      await openProfileModal(
+        userId
+      );
+
+    }
+
+
+    /* =====================================================
+       REPORTS
+    ===================================================== */
+
+    function openReport(
+      targetType,
+      targetId
+    ) {
+
+      if (!currentUser) {
+
+        openAuth("login");
+        return;
+
+      }
+
+
+      reportTarget = {
+        targetType,
+        targetId
+      };
+
+
+      document
+        .getElementById(
+          "reportOverlay"
+        )
+        .classList.add(
+          "show"
+        );
+
+    }
+
+
+    function closeReport() {
+
+      document
+        .getElementById(
+          "reportOverlay"
+        )
+        .classList.remove(
+          "show"
+        );
+
+
+      reportTarget =
+        null;
+
+    }
+
+
+    async function submitReport(
+      event
+    ) {
+
+      event.preventDefault();
+
+
+      if (
+        !currentUser ||
+        !reportTarget
+      ) {
+
+        return;
+
+      }
+
+
+      const reason =
+        document
+          .getElementById(
+            "reportReason"
+          )
+          .value;
+
+
+      const details =
+        document
+          .getElementById(
+            "reportDetails"
+          )
+          .value
+          .trim();
+
+
+      const button =
+        document
+          .getElementById(
+            "reportSubmit"
+          );
+
+
+      const message =
+        document
+          .getElementById(
+            "reportMessage"
+          );
+
+
+      button.disabled = true;
+
+
+      try {
+
+        const {
+          error
+        } =
+          await supabaseClient
+            .from("reports")
+            .insert(
+              {
+                reporter_id:
+                  currentUser.id,
+
+                target_type:
+                  reportTarget.targetType,
+
+                target_id:
+                  reportTarget.targetId,
+
+                reason:
+                  reason,
+
+                details:
+                  details
+              }
+            );
+
+
+        if (error) {
+          throw error;
+        }
+
+
+        showMessage(
+          message,
+          "Report submitted. Thank you.",
+          "success"
+        );
+
+
+        setTimeout(
+          closeReport,
+          1000
+        );
+
+      } catch (error) {
+
+        showMessage(
+          message,
+          error.message,
+          "error"
+        );
+
+      } finally {
+
+        button.disabled = false;
+
+      }
+
+    }
+
+
+    /* =====================================================
+       NOTIFICATIONS
+    ===================================================== */
+
+    async function loadNotificationBadge() {
+
+      if (!currentUser) {
+
+        updateNotificationBadge(
+          0
+        );
+
+        return;
+
+      }
+
+
+      const {
+        count,
+        error
+      } =
+        await supabaseClient
+          .from("notifications")
+          .select(
+            "id",
+            {
+              count: "exact",
+              head: true
+            }
+          )
+          .eq(
+            "user_id",
+            currentUser.id
+          )
+          .eq(
+            "is_read",
+            false
+          );
+
+
+      if (!error) {
+
+        updateNotificationBadge(
+          count || 0
+        );
+
+      }
+
+    }
+
+
+    function updateNotificationBadge(
+      count
+    ) {
+
+      const badge =
+        document.getElementById(
+          "notificationBadge"
+        );
+
+
+      if (
+        !count ||
+        count <= 0
+      ) {
+
+        badge.classList.add(
+          "hidden"
+        );
+
+        badge.textContent =
+          "0";
+
+        return;
+
+      }
+
+
+      badge.classList.remove(
+        "hidden"
+      );
+
+
+      badge.textContent =
+        count > 99
+          ? "99+"
+          : String(count);
+
+    }
+
+
+    async function loadNotifications() {
+
+      const container =
+        document.getElementById(
+          "notificationsContainer"
+        );
+
+
+      if (!currentUser) {
+
+        container.innerHTML = `
+          <div class="empty-state">
+            Sign in to see notifications.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      const {
+        data: notifications,
+        error
+      } =
+        await supabaseClient
+          .from("notifications")
+          .select(
+            "id,actor_id,type,entity_type,entity_id,message,is_read,created_at"
+          )
+          .eq(
+            "user_id",
+            currentUser.id
+          )
+          .order(
+            "created_at",
+            {
+              ascending: false
+            }
+          )
+          .limit(100);
+
+
+      if (error) {
+
+        container.innerHTML = `
+          <div class="empty-state">
+            Could not load notifications.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      if (
+        !notifications ||
+        notifications.length === 0
+      ) {
+
+        container.innerHTML = `
+          <div class="empty-state">
+            No notifications yet.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      container.innerHTML =
+        notifications
+          .map(
+            notification => `
+
+              <div
+                class="notification ${
+                  notification.is_read
+                    ? ""
+                    : "unread"
+                }"
+                onclick="markNotificationRead(
+                  ${notification.id}
+                )">
+
+                <div class="avatar">
+                  ${iconForNotification(
+                    notification.type
+                  )}
+                </div>
+
+
+                <div>
+
+                  <div class="notification-message">
+                    ${escapeHtml(
+                      notification.message
+                    )}
+                  </div>
+
+                  <div class="notification-time">
+                    ${escapeHtml(
+                      formatDate(
+                        notification.created_at
+                      )
+                    )}
+                  </div>
+
+                </div>
+
+              </div>
+
+            `
+          )
+          .join("");
+
+    }
+
+
+    async function markNotificationRead(
+      notificationId
+    ) {
+
+      if (!currentUser) {
+        return;
+      }
+
+
+      await supabaseClient
+        .from("notifications")
+        .update(
+          {
+            is_read:
+              true
+          }
+        )
+        .eq(
+          "id",
+          notificationId
+        )
+        .eq(
+          "user_id",
+          currentUser.id
+        );
+
+
+      await loadNotifications();
+
+      await loadNotificationBadge();
+
+    }
+
+
+    async function markAllNotificationsRead() {
+
+      if (!currentUser) {
+        return;
+      }
+
+
+      await supabaseClient
+        .from("notifications")
+        .update(
+          {
+            is_read:
+              true
+          }
+        )
+        .eq(
+          "user_id",
+          currentUser.id
+        );
+
+
+      await loadNotifications();
+
+      updateNotificationBadge(
+        0
+      );
+
+    }
+
+
+    /* =====================================================
+       MESSAGES
+    ===================================================== */
+
+    async function startMessageWithUser(
+      userId
+    ) {
+
+      closeProfileModal();
+
+      if (!currentUser) {
+
+        openAuth("login");
+        return;
+
+      }
+
+
+      await showPage(
+        "messages"
+      );
+
+
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .rpc(
+              "projectx_get_or_create_direct_conversation",
+              {
+                other_user:
+                  userId
+              }
+            );
+
+
+        if (error) {
+          throw error;
+        }
+
+
+        currentConversationId =
+          data;
+
+
+        currentConversationUserId =
+          userId;
+
+
+        await loadConversations();
+
+        await openConversation(
+          data,
+          userId
+        );
+
+      } catch (error) {
+
+        showToast(
+          error.message,
+          "error"
+        );
+
+      }
+
+    }
+
+
+    async function loadConversations() {
+
+      const list =
+        document.getElementById(
+          "conversationList"
+        );
+
+
+      if (!currentUser) {
+
+        list.innerHTML = `
+          <div class="empty-state">
+            Sign in to use messages.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      const {
+        data: memberRows,
+        error
+      } =
+        await supabaseClient
+          .from("conversation_members")
+          .select(
+            "conversation_id"
+          )
+          .eq(
+            "user_id",
+            currentUser.id
+          );
+
+
+      if (error) {
+
+        list.innerHTML = `
+          <div class="empty-state">
+            Could not load messages.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      const conversationIds =
+        [
+          ...new Set(
+            (memberRows || [])
+              .map(
+                row =>
+                  row.conversation_id
+              )
+          )
+        ];
+
+
+      if (
+        conversationIds.length ===
+        0
+      ) {
+
+        list.innerHTML = `
+          <div class="empty-state">
+            No conversations yet.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      const {
+        data: otherMembers
+      } =
+        await supabaseClient
+          .from("conversation_members")
+          .select(
+            "conversation_id,user_id"
+          )
+          .in(
+            "conversation_id",
+            conversationIds
+          )
+          .neq(
+            "user_id",
+            currentUser.id
+          );
+
+
+      const otherIds =
+        [
+          ...new Set(
+            (otherMembers || [])
+              .map(
+                row =>
+                  row.user_id
+              )
+          )
+        ];
+
+
+      const {
+        data: profiles
+      } =
+        otherIds.length
+          ? await supabaseClient
+              .from("profiles")
+              .select(
+                "id,display_name,username,avatar_url"
+              )
+              .in(
+                "id",
+                otherIds
+              )
+          : {
+              data: []
+            };
+
+
+      const profileMap =
+        new Map(
+          (profiles || [])
+            .map(
+              profile => [
+                profile.id,
+                profile
+              ]
+            )
+        );
+
+
+      list.innerHTML =
+        (otherMembers || [])
+          .map(
+            member => {
+
+              const profile =
+                profileMap.get(
+                  member.user_id
+                );
+
+
+              const name =
+                profile?.display_name ||
+                "User";
+
+
+              return `
+
+                <div
+                  class="conversation-item ${
+                    member.conversation_id ===
+                    currentConversationId
+                      ? "active"
+                      : ""
+                  }"
+                  onclick="openConversation(
+                    '${member.conversation_id}',
+                    '${member.user_id}'
+                  )">
+
+                  <div class="avatar">
+
+                    ${
+                      profile?.avatar_url
+                        ? `
+                          <img
+                            src="${escapeHtml(
+                              profile.avatar_url
+                            )}"
+                            alt="Avatar">
+                        `
+                        : escapeHtml(
+                            getInitial(
+                              name
+                            )
+                          )
+                    }
+
+                  </div>
+
+
+                  <div class="conversation-info">
+
+                    <div class="conversation-name">
+                      ${escapeHtml(
+                        name
+                      )}
+                    </div>
+
+                    <div class="conversation-preview">
+                      @${escapeHtml(
+                        profile?.username ||
+                          "user"
+                      )}
+                    </div>
+
+                  </div>
+
+                </div>
+
+              `;
+
+            }
+          )
+          .join("");
+
+    }
+
+
+    async function openConversation(
+      conversationId,
+      otherUserId
+    ) {
+
+      currentConversationId =
+        conversationId;
+
+
+      currentConversationUserId =
+        otherUserId;
+
+
+      const {
+        data: profile
+      } =
+        await supabaseClient
+          .from("profiles")
+          .select(
+            "display_name,username,avatar_url"
+          )
+          .eq(
+            "id",
+            otherUserId
+          )
+          .maybeSingle();
+
+
+      document.getElementById(
+        "chatHeader"
+      ).innerHTML = `
+
+        <strong>
+          ${escapeHtml(
+            profile?.display_name ||
+              "User"
+          )}
+        </strong>
+
+        <div
+          class="muted"
+          style="font-size:12px;">
+          @${escapeHtml(
+            profile?.username ||
+              "user"
+          )}
+        </div>
+
+      `;
+
+
+      document.getElementById(
+        "chatForm"
+      ).classList.remove(
+        "hidden"
+      );
+
+
+      await loadConversationMessages();
+
+      await supabaseClient
+        .rpc(
+          "projectx_mark_conversation_read",
+          {
+            target_conversation:
+              conversationId
+          }
+        );
+
+
+      await loadConversations();
+
+      await loadNotificationBadge();
+
+    }
+
+
+    async function loadConversationMessages() {
+
+      if (
+        !currentConversationId
+      ) {
+        return;
+      }
+
+
+      const container =
+        document.getElementById(
+          "chatMessages"
+        );
+
+
+      const {
+        data: messages,
+        error
+      } =
+        await supabaseClient
+          .from("messages")
+          .select(
+            "id,sender_id,content,created_at,read_at"
+          )
+          .eq(
+            "conversation_id",
+            currentConversationId
+          )
+          .order(
+            "created_at",
+            {
+              ascending: true
+            }
+          )
+          .limit(200);
+
+
+      if (error) {
+
+        container.innerHTML = `
+          <div class="empty-state">
+            Could not load messages.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      if (
+        !messages ||
+        messages.length === 0
+      ) {
+
+        container.innerHTML = `
+          <div class="empty-state">
+            No messages yet.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      container.innerHTML =
+        messages
+          .map(
+            message => {
+
+              const mine =
+                currentUser &&
+                message.sender_id ===
+                  currentUser.id;
+
+
+              return `
+
+                <div
+                  class="message-bubble-wrap ${
+                    mine
+                      ? "mine"
+                      : ""
+                  }">
+
+                  <div
+                    class="message-bubble ${
+                      mine
+                        ? "mine"
+                        : ""
+                    }">
+
+                    <div>
+                      ${escapeHtml(
+                        message.content
+                      )}
+                    </div>
+
+                    <div class="message-time">
+                      ${escapeHtml(
+                        formatDate(
+                          message.created_at
+                        )
+                      )}
+                    </div>
+
+                  </div>
+
+                </div>
+
+              `;
+
+            }
+          )
+          .join("");
+
+
+      container.scrollTop =
+        container.scrollHeight;
+
+    }
+
+
+    async function sendMessage(
+      event
+    ) {
+
+      event.preventDefault();
+
+
+      if (
+        !currentUser ||
+        !currentConversationId
+      ) {
+        return;
+      }
+
+
+      const input =
+        document.getElementById(
+          "messageInput"
+        );
+
+
+      const button =
+        document.getElementById(
+          "messageSendButton"
+        );
+
+
+      const content =
+        input.value.trim();
+
+
+      if (!content) {
+        return;
+      }
+
+
+      button.disabled = true;
+
+
+      try {
+
+        const {
+          error
+        } =
+          await supabaseClient
+            .from("messages")
+            .insert(
+              {
+                conversation_id:
+                  currentConversationId,
+
+                sender_id:
+                  currentUser.id,
+
+                content:
+                  content
+              }
+            );
+
+
+        if (error) {
+          throw error;
+        }
+
+
+        input.value = "";
+
+        await loadConversationMessages();
+
+      } catch (error) {
+
+        showToast(
+          error.message,
+          "error"
+        );
+
+      } finally {
+
+        button.disabled = false;
+
+      }
+
+    }
+
+
+    /* =====================================================
+       UTILITIES
+    ===================================================== */
+
+    function setAvatar(
+      element,
+      url,
+      name
+    ) {
+
+      if (!element) {
+        return;
+      }
+
+
+      if (url) {
+
+        element.innerHTML = `
+          <img
+            src="${escapeHtml(
+              url
+            )}"
+            alt="Avatar">
+        `;
+
+      } else {
+
+        element.textContent =
+          getInitial(name);
+
+      }
+
+    }
+
 
     function getInitial(
       value
@@ -3063,24 +7826,45 @@
       }
 
 
-      return value
+      return String(
+        value
+      )
+        .trim()
         .charAt(0)
         .toUpperCase();
 
     }
 
 
-    function formatDate(
-      dateString
+    function getFileExtension(
+      filename
     ) {
 
-      const date =
-        new Date(
-          dateString
+      const index =
+        filename.lastIndexOf(
+          "."
         );
 
 
-      return date.toLocaleString(
+      if (index === -1) {
+        return ".bin";
+      }
+
+
+      return filename
+        .slice(index)
+        .toLowerCase();
+
+    }
+
+
+    function formatDate(
+      value
+    ) {
+
+      return new Date(
+        value
+      ).toLocaleString(
         undefined,
         {
           dateStyle:
@@ -3119,6 +7903,25 @@
         .replaceAll(
           "'",
           "&#039;"
+        );
+
+    }
+
+
+    function escapeFilter(
+      value
+    ) {
+
+      return String(
+        value ?? ""
+      )
+        .replaceAll(
+          "%",
+          "\\%"
+        )
+        .replaceAll(
+          ",",
+          "\\,"
         );
 
     }
@@ -3166,7 +7969,7 @@
       ) {
 
         toast.style.borderColor =
-          "#512222";
+          "#552222";
 
       }
 
@@ -3176,7 +7979,7 @@
       ) {
 
         toast.style.borderColor =
-          "#254c30";
+          "#245230";
 
       }
 
@@ -3192,12 +7995,232 @@
 
       setTimeout(
         () => {
-
           toast.remove();
-
         },
         3500
       );
+
+    }
+
+
+    function iconForNotification(
+      type
+    ) {
+
+      switch (type) {
+
+        case "follow":
+          return "👤";
+
+        case "like":
+          return "♥";
+
+        case "comment":
+          return "💬";
+
+        case "message":
+          return "✉";
+
+        case "mention":
+          return "@";
+
+        default:
+          return "•";
+
+      }
+
+    }
+
+
+    function previewPostImage(
+      event
+    ) {
+
+      const file =
+        event.target.files?.[0];
+
+
+      const preview =
+        document.getElementById(
+          "postImagePreview"
+        );
+
+
+      const image =
+        document.getElementById(
+          "postPreviewImage"
+        );
+
+
+      const name =
+        document.getElementById(
+          "postImageName"
+        );
+
+
+      if (!file) {
+
+        preview.classList.add(
+          "hidden"
+        );
+
+        name.textContent =
+          "";
+
+        return;
+
+      }
+
+
+      if (
+        !file.type.startsWith(
+          "image/"
+        )
+      ) {
+
+        event.target.value = "";
+
+        showToast(
+          "Please select an image.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      if (
+        file.size >
+        5 * 1024 * 1024
+      ) {
+
+        event.target.value = "";
+
+        showToast(
+          "Image must be 5 MB or smaller.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      image.src =
+        URL.createObjectURL(
+          file
+        );
+
+
+      preview.classList.remove(
+        "hidden"
+      );
+
+
+      name.textContent =
+        file.name;
+
+    }
+
+
+    async function copyPostLink(
+      postId
+    ) {
+
+      const url =
+        window.location.origin +
+        window.location.pathname +
+        "#post-" +
+        postId;
+
+
+      try {
+
+        await navigator.clipboard
+          .writeText(
+            url
+          );
+
+
+        showToast(
+          "Post link copied.",
+          "success"
+        );
+
+      } catch {
+
+        showToast(
+          "Could not copy the link.",
+          "error"
+        );
+
+      }
+
+    }
+
+
+    /* =====================================================
+       INITIAL UI
+    ===================================================== */
+
+    function updateNavigation() {
+
+      const nav =
+        document.getElementById(
+          "navRight"
+        );
+
+
+      if (!currentUser) {
+
+        nav.innerHTML = `
+
+          <button
+            class="btn btn-primary"
+            onclick="openAuth('login')">
+
+            Sign in
+
+          </button>
+
+        `;
+
+        return;
+
+      }
+
+
+      nav.innerHTML = `
+
+        <span class="nav-email">
+
+          ${escapeHtml(
+            currentUser.email ||
+              ""
+          )}
+
+        </span>
+
+
+        <button
+          class="btn btn-primary btn-small"
+          onclick="showPage('account')">
+
+          Account
+
+        </button>
+
+
+        <button
+          class="btn btn-dark btn-small"
+          onclick="logout()">
+
+          Logout
+
+        </button>
+
+      `;
 
     }
 
