@@ -5563,80 +5563,100 @@ async function loadPosts(
     }
 
 
-    async function createComment(
-      event,
-      postId
-    ) {
+    async function createComment(event, postId) {
+  event.preventDefault();
 
-      event.preventDefault();
-
-
-      if (!currentUser) {
-
-        openAuth("login");
-        return;
-
-      }
-
-
-      const input =
-        document.getElementById(
-          "commentInput-" +
-          postId
-        );
-
-
-      const content =
-        input.value.trim();
-
-
-      if (!content) {
-        return;
-      }
-
-
-      const {
-        error
-      } =
-        await supabaseClient
-          .from("comments")
-          .insert(
-            {
-              post_id:
-                postId,
-
-              user_id:
-                currentUser.id,
-
-              content:
-                content
-            }
-          );
-
-
-      if (error) {
-
-        showToast(
-          error.message,
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      input.value = "";
-
-      await loadComments(
-        postId
-      );
-
-    
-
+  try {
+    if (!currentUser) {
+      openAuth("login");
+      return;
     }
 
+    const input = document.getElementById(
+      "commentInput-" + postId
+    );
 
+    if (!input) {
+      showToast(
+        "Comment input not found.",
+        "error"
+      );
+      return;
+    }
+
+    const content = input.value.trim();
+
+    if (!content) {
+      showToast(
+        "Write a comment first.",
+        "error"
+      );
+      return;
+    }
+
+    const button =
+      event.submitter ||
+      input.closest("form")?.querySelector("button");
+
+    if (button) {
+      button.disabled = true;
+      button.textContent = "Sending...";
+    }
+
+    const {
+      error
+    } = await supabaseClient
+      .from("comments")
+      .insert({
+        post_id: postId,
+        user_id: currentUser.id,
+        content: content
+      });
+
+    if (error) {
+      throw error;
+    }
+
+    input.value = "";
+
+    await loadComments(postId);
+
+    if (button) {
+      button.disabled = false;
+      button.textContent = "Send";
+    }
+
+    showToast(
+      "Comment posted.",
+      "success"
+    );
+
+  } catch (error) {
+    console.error(
+      "Comment error:",
+      error
+    );
+
+    showToast(
+      error.message ||
+        "Could not post comment.",
+      "error"
+    );
+
+    const form =
+      document.getElementById(
+        "commentInput-" + postId
+      )?.closest("form");
+
+    const button =
+      form?.querySelector("button");
+
+    if (button) {
+      button.disabled = false;
+      button.textContent = "Send";
+    }
+  }
+}
     async function toggleCommentLike(
       commentId,
       postId
